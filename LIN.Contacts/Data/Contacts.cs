@@ -10,7 +10,7 @@ public class Contacts
 
 
     /// <summary>
-    /// Crea un perfil.
+    /// Crea un contacto.
     /// </summary>
     /// <param name="data">Modelo.</param>
     public async static Task<CreateResponse> Create(ContactModel data)
@@ -31,9 +31,9 @@ public class Contacts
 
 
     /// <summary>
-    /// Obtiene un perfil
+    /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">ID del perfil</param>
+    /// <param name="id">ID del contacto</param>
     public async static Task<ReadOneResponse<ContactModel>> Read(int id)
     {
 
@@ -50,8 +50,9 @@ public class Contacts
     }
 
 
+
     /// <summary>
-    /// Obtiene un perfil
+    /// Obtiene los contactos asociados a un perfil
     /// </summary>
     /// <param name="id">ID del perfil</param>
     public async static Task<ReadAllResponse<ContactModel>> ReadAll(int id)
@@ -70,13 +71,13 @@ public class Contacts
     }
 
 
-#endregion
+    #endregion
 
 
 
 
     /// <summary>
-    /// Crea un perfil.
+    /// Crea un contacto.
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto de conexión.</param>
@@ -141,9 +142,9 @@ public class Contacts
 
 
     /// <summary>
-    /// Obtiene un contacto
+    /// Obtiene los contactos asociados a un perfil.
     /// </summary>
-    /// <param name="id">ID del contacto</param>
+    /// <param name="id">ID del perfil.</param>
     /// <param name="context">Contexto de conexión.</param>
     public async static Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
     {
@@ -153,16 +154,18 @@ public class Contacts
         try
         {
 
+            // Query de contactos
             var contacts = await (from P in context.DataBase.Contacts
-                                 where P.Im.Id == id
-                                 select new ContactModel
-                                 {
-                                     Birthday = P.Birthday,
-                                     Id = P.Id,
-                                     Mails = P.Mails,
-                                     Nombre = P.Nombre,
-                                     Phones = P.Phones
-                                 }).ToListAsync();
+                                  where P.Im.Id == id
+                                  orderby P.Nombre
+                                  select new ContactModel
+                                  {
+                                      Birthday = P.Birthday,
+                                      Id = P.Id,
+                                      Mails = P.Mails,
+                                      Nombre = P.Nombre,
+                                      Phones = P.Phones
+                                  }).ToListAsync();
 
             return new(Responses.Success, contacts);
         }
@@ -171,11 +174,6 @@ public class Contacts
         }
         return new();
     }
-
-
-
-
-
 
 
 
