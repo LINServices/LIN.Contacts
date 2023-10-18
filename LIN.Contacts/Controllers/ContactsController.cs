@@ -25,7 +25,15 @@ public class ContactsController : ControllerBase
                 Message = "Token invalido",
                 Response = Responses.Unauthorized
             };
-        
+
+        // Validar
+        if (model.Nombre.Trim().Length <= 0)
+            return new CreateResponse()
+            {
+                Message = "Parámetros inválidos",
+                Response = Responses.InvalidParam
+            };
+
         // Agrega de quien es el contacto
         model.Im = new()
         {

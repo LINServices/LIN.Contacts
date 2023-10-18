@@ -128,6 +128,7 @@ public class Contacts
                                      Id = P.Id,
                                      Mails = P.Mails,
                                      Nombre = P.Nombre,
+                                     Type = P.Type,
                                      Phones = P.Phones
                                  }).FirstOrDefaultAsync();
 
@@ -164,6 +165,7 @@ public class Contacts
                                       Id = P.Id,
                                       Mails = P.Mails,
                                       Nombre = P.Nombre,
+                                      Type = P.Type,
                                       Phones = P.Phones
                                   }).ToListAsync();
 
