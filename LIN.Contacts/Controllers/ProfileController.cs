@@ -1,6 +1,3 @@
-using LIN.Contacts.Data;
-using LIN.Contacts.Services;
-
 namespace LIN.Contacts.Controllers;
 
 
@@ -85,7 +82,10 @@ public class ProfileController : ControllerBase
             Model = new()
             {
                 Account = authResponse.Model,
-                LINAuthToken = authResponse.Token,
+                TokenCollection = new()
+                {
+                    {"identity",authResponse.Token}
+                },
                 Profile = profile.Model
             },
             Token = token
@@ -134,7 +134,10 @@ public class ProfileController : ControllerBase
         }
 
         httpResponse.Model.Account = response.Model;
-        httpResponse.Model.LINAuthToken = response.Token;
+        httpResponse.Model.TokenCollection = new()
+                {
+                    {"identity",response.Token}
+                };
 
 
         return httpResponse;
