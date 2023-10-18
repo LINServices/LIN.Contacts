@@ -1,13 +1,13 @@
-global using Microsoft.AspNetCore.Mvc;
 global using Http.ResponsesList;
-global using Microsoft.EntityFrameworkCore;
-global using LIN.Types.Contacts.Models;
+global using LIN.Contacts;
 global using LIN.Contacts.Data;
 global using LIN.Contacts.Services;
-global using LIN.Contacts;
-global using LIN.Types.Responses;
 global using LIN.Modules;
 global using LIN.Types.Auth.Abstracts;
+global using LIN.Types.Contacts.Models;
+global using LIN.Types.Responses;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,12 +55,9 @@ catch
 app.UseCors("AllowAnyOrigin");
 
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
