@@ -35,7 +35,7 @@ public class MemorySession
     {
         string final = "";
         foreach (var contact in Contactos)
-            final += $"<<<{contact.Nombre} su correo es {contact.Mails[0].Email} y su telefono {contact.Phones[0].Number}>>>,";
+            final += $"<<<{contact.Nombre} su correo es {contact.Mails[0].Email}, el tipo de contacto es {contact.Type} y su teléfono {contact.Phones[0].Number}>>>,";
         
         return final;
     }
