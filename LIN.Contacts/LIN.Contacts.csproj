@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
+    <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.OpenIA\LIN.Access.OpenIA.csproj" />
     <ProjectReference Include="..\..\..\Tipos\Http\Http.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
