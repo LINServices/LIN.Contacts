@@ -1,5 +1,5 @@
-using LIN.Access.OpenIA.ModelsData;
 using LIN.Contacts.Memory;
+using LIN.Types.Emma.Models;
 
 namespace LIN.Contacts.Controllers;
 
@@ -13,14 +13,14 @@ public class EmmaController : ControllerBase
 
 
     [HttpPost]
-    public async Task<HttpReadOneResponse<Message>> ReadAll([FromHeader] string token, [FromBody] string consult)
+    public async Task<HttpReadOneResponse<ResponseIAModel>> ReadAll([FromHeader] string token, [FromBody] string consult)
     {
 
         var (isValid, profileID, _) = Jwt.Validate(token);
 
         if (!isValid)
         {
-            return new ReadOneResponse<Message>()
+            return new ReadOneResponse<ResponseIAModel>()
             {
                 Response = Responses.Unauthorized
             };
@@ -28,27 +28,25 @@ public class EmmaController : ControllerBase
 
         var getProf = Mems.Sessions[profileID];
 
-        var emma = new Access.OpenIA.IA(Configuration.GetConfiguration("openIa:key"));
+        var iaModel = new Access.OpenIA.IAModelBuilder(Configuration.GetConfiguration("openIa:key"));
 
-        // Carga el modelo
-        emma.LoadWho();
-        emma.LoadRecomendations();
-        emma.LoadPersonality();
-        emma.LoadSomething($""" 
-                           Estas en el contexto de LIN Contacts, la app de agenda de contactos de LIN Platform.
-                           Estos son los contactos que tiene el usuario: {getProf?.StringOfContacts()}
-                           Recuerda que el usuario puede preguntar información acerca de sus contactos
-                           """);
+        iaModel.Load(IAConsts.Base);
+        iaModel.Load(IAConsts.Personalidad);
 
-        emma.LoadSomething($""" 
-                           El usuario tiene {getProf?.Contactos.Count} contactos asociados a su cuenta.
-                           """);
+        iaModel.Load($""" 
+                       Estas en el contexto de LIN Contacts, la app de agenda de contactos de LIN Platform.
+                       Estos son los contactos que tiene el usuario: {getProf?.StringOfContacts()}
+                       Recuerda que el usuario puede preguntar información acerca de sus contactos y deveras contestar acertadamente.
+                       """);
+        iaModel.Load($""" 
+                      El usuario tiene {getProf?.Contactos.Count} contactos asociados a su cuenta.
+                      """);
 
-        var result = await emma.Respond(consult);
+        var final = await iaModel.Reply(consult);
 
-        return new ReadOneResponse<Message>()
+        return new ReadOneResponse<ResponseIAModel>()
         {
-            Model = result,
+            Model = final,
             Response = Responses.Success
         };
 

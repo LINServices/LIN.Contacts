@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\..\Tipos\Http\Http.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
+    <ProjectReference Include="..\..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
   </ItemGroup>
 
