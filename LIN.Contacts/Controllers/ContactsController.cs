@@ -69,7 +69,7 @@ public class ContactsController : ControllerBase
                 Message = "Token invalido",
                 Response = Responses.Unauthorized
             };
-        
+
         // Obtiene los contactos
         var all = await Data.Contacts.ReadAll(profileId);
 

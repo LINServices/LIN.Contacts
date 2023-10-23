@@ -56,7 +56,11 @@ app.UseCors("AllowAnyOrigin");
 
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(config =>
+{
+    config.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+    config.RoutePrefix = string.Empty;
+});
 
 
 app.UseHttpsRedirection();

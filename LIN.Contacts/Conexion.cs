@@ -1,6 +1,4 @@
-﻿using LIN.Contacts.Data;
-
-namespace LIN.Contacts;
+﻿namespace LIN.Contacts;
 
 
 /// <summary>
