@@ -99,7 +99,7 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Iniciar sesi�n
+    /// Iniciar sesión con el token.
     /// </summary>
     /// <param name="token">Token</param>
     [HttpGet("login/token")]
@@ -152,9 +152,9 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Obtiene los miembros de una conversaci�n
+    /// Obtiene los miembros de una conversación.
     /// </summary>
-    /// <param name="id">ID de la conversaci�n.</param>
+    /// <param name="id">ID de la conversación.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("search")]
     public async Task<HttpReadAllResponse<SessionModel<ProfileModel>>> Search([FromQuery] string pattern, [FromHeader] string token)
