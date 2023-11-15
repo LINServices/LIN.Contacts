@@ -6,17 +6,28 @@ public class Context : DbContext
 
 
     /// <summary>
-    /// Tabla de perfiles
+    /// Tabla de perfiles.
     /// </summary>
     public DbSet<ProfileModel> Profiles { get; set; }
 
 
     /// <summary>
-    /// Tabla de proyectos
+    /// Tabla de contactos.
     /// </summary>
     public DbSet<ContactModel> Contacts { get; set; }
+
+
+    /// <summary>
+    /// Tabla de Emails.
+    /// </summary>
     public DbSet<MailModel> Mails { get; set; }
+
+
+    /// <summary>
+    /// Tabla de teléfonos.
+    /// </summary>
     public DbSet<PhoneModel> Phones { get; set; }
+
 
 
     /// <summary>
