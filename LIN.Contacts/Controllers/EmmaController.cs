@@ -30,15 +30,15 @@ public class EmmaController : ControllerBase
 
         var iaModel = new Access.OpenIA.IAModelBuilder(Configuration.GetConfiguration("openIa:key"));
 
-        iaModel.Load(IAConsts.Base);
-        iaModel.Load(IAConsts.Personalidad);
+        iaModel.Load(IaConsts.Base);
+        iaModel.Load(IaConsts.Personalidad);
 
-        iaModel.Load($""" 
-                       Estas en el contexto de LIN Contacts, la app de agenda de contactos de LIN Platform.
-                       Estos son los contactos que tiene el usuario: {getProf?.StringOfContacts()}
-                       Recuerda que el usuario puede preguntar información acerca de sus contactos y deveras contestar acertadamente.
-                       """);
-        iaModel.Load($""" 
+        iaModel.Load($"""
+                      Estas en el contexto de LIN Contacts, la app de agenda de contactos de LIN Platform.
+                      Estos son los contactos que tiene el usuario: {getProf?.StringOfContacts()}
+                      Recuerda que el usuario puede preguntar informaciÃ³n acerca de sus contactos y deveras contestar acertadamente.
+                      """);
+        iaModel.Load($"""
                       El usuario tiene {getProf?.Contactos.Count} contactos asociados a su cuenta.
                       """);
 

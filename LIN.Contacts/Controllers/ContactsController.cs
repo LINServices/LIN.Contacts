@@ -4,15 +4,15 @@ namespace LIN.Contacts.Controllers;
 
 
 [Route("contacts")]
-public class ContactsController : ControllerBase
+internal class ContactsController : ControllerBase
 {
 
 
     /// <summary>
-    /// Crear contacto
+    /// Crear contacto.
     /// </summary>
-    /// <param name="token">Token de acceso</param>
-    /// <param name="model">Modelo del contacto</param>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="model">Modelo.</param>
     [HttpPost]
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] ContactModel model)
     {
@@ -52,7 +52,7 @@ public class ContactsController : ControllerBase
 
 
     /// <summary>
-    /// Obtiene los contactos asociados a un perfil
+    /// Obtiene los contactos asociados a un perfil.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]

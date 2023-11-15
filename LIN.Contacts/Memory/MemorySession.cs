@@ -23,7 +23,7 @@ public class MemorySession
     /// </summary>
     public MemorySession()
     {
-        Profile = new ProfileModel();
+        Profile = new();
         Contactos = new();
     }
 
@@ -33,7 +33,8 @@ public class MemorySession
     /// </summary>
     public string StringOfContacts()
     {
-        string final = "";
+        var final = string.Empty;
+
         foreach (var contact in Contactos)
             final += $"<<<{contact.Nombre} su correo es {contact.Mails[0].Email}, el tipo de contacto es {contact.Type} y su teléfono {contact.Phones[0].Number}>>>,";
 

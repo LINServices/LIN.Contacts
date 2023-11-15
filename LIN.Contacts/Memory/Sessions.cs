@@ -1,5 +1,6 @@
 ﻿namespace LIN.Contacts.Memory;
 
+
 public class Sessions : Dictionary<int, MemorySession>
 {
 
@@ -25,7 +26,7 @@ public class Sessions : Dictionary<int, MemorySession>
     /// <param name="session">Modelo</param>
     public void Add(MemorySession session)
     {
-        this.Add(session.Profile.Id, session);
+        Add(session.Profile.Id, session);
     }
 
 

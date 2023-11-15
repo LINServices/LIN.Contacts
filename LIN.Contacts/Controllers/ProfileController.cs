@@ -7,27 +7,27 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Inicia una sesión de usuario
+    /// Inicia una sesion de usuario
     /// </summary>
-    /// <param name="user">Usuario único</param>
-    /// <param name="password">Contraseña del usuario</param>
-    /// <param name="app">Key de la app que solicita la información</param>
+    /// <param name="user">Usuario ï¿½nico</param>
+    /// <param name="password">Contraseï¿½a del usuario</param>
+    /// <param name="app">Key de la app que solicita la informaciï¿½n</param>
     [HttpGet("login")]
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Comprobación
+        // Comprobaciï¿½n
         if (!user.Any() || !password.Any())
             return new(Responses.InvalidParam);
 
-        // Respuesta de autenticación
+        // Respuesta de autenticaciï¿½n
         var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
 
-        // Autenticación errónea
+        // Autenticaciï¿½n errï¿½nea
         if (authResponse.Response != Responses.Success)
             return new ReadOneResponse<AuthModel<ProfileModel>>
             {
-                Message = "Autenticación fallida",
+                Message = "Autenticaciï¿½n fallida",
                 Response = authResponse.Response
             };
 
@@ -39,6 +39,7 @@ public class ProfileController : ControllerBase
         {
             case Responses.Success:
                 break;
+
             case Responses.NotExistProfile:
                 {
                     var res = await Profiles.Create(new()
@@ -56,18 +57,19 @@ public class ProfileController : ControllerBase
                         return new ReadOneResponse<AuthModel<ProfileModel>>
                         {
                             Response = Responses.UnavailableService,
-                            Message = "Un error grave ocurrió"
+                            Message = "Un error grave ocurriï¿½"
                         };
                     }
 
                     profile = res;
                     break;
                 }
+
             default:
                 return new ReadOneResponse<AuthModel<ProfileModel>>
                 {
                     Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurrió"
+                    Message = "Un error grave ocurriï¿½"
                 };
         }
 
@@ -84,7 +86,9 @@ public class ProfileController : ControllerBase
                 Account = authResponse.Model,
                 TokenCollection = new()
                 {
-                    {"identity",authResponse.Token}
+                    {
+                        "identity", authResponse.Token
+                    }
                 },
                 Profile = profile.Model
             },
@@ -96,7 +100,7 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Iniciar sesión
+    /// Iniciar sesiï¿½n
     /// </summary>
     /// <param name="token">Token</param>
     [HttpGet("login/token")]
@@ -120,7 +124,7 @@ public class ProfileController : ControllerBase
         var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
         {
             Response = Responses.Success,
-            Message = "Success",
+            Message = "Success"
 
         };
 
@@ -135,9 +139,11 @@ public class ProfileController : ControllerBase
 
         httpResponse.Model.Account = response.Model;
         httpResponse.Model.TokenCollection = new()
-                {
-                    {"identity",response.Token}
-                };
+        {
+            {
+                "identity", response.Token
+            }
+        };
 
 
         return httpResponse;
@@ -147,9 +153,9 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Obtiene los miembros de una conversación
+    /// Obtiene los miembros de una conversaciï¿½n
     /// </summary>
-    /// <param name="id">ID de la conversación.</param>
+    /// <param name="id">ID de la conversaciï¿½n.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("search")]
     public async Task<HttpReadAllResponse<SessionModel<ProfileModel>>> Search([FromQuery] string pattern, [FromHeader] string token)
@@ -174,7 +180,7 @@ public class ProfileController : ControllerBase
 
         var final = from P in profiles.Models
                     join A in accounts.Models
-                    on P.AccountId equals A.ID
+                        on P.AccountId equals A.ID
                     select new SessionModel<ProfileModel>
                     {
                         Account = A,

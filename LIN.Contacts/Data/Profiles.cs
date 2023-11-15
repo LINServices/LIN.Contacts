@@ -13,11 +13,11 @@ public class Profiles
     /// Crea un perfil.
     /// </summary>
     /// <param name="data">Modelo.</param>
-    public async static Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data)
+    public static async Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await Create(data, context);
@@ -34,11 +34,11 @@ public class Profiles
     /// Obtiene un perfil
     /// </summary>
     /// <param name="id">ID del perfil</param>
-    public async static Task<ReadOneResponse<ProfileModel>> Read(int id)
+    public static async Task<ReadOneResponse<ProfileModel>> Read(int id)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await Read(id, context);
@@ -55,11 +55,11 @@ public class Profiles
     /// Obtiene un perfil por medio del ID de su cuenta.
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id)
+    public static async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await ReadByAccount(id, context);
@@ -72,11 +72,11 @@ public class Profiles
 
 
 
-    public async static Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids)
+    public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await ReadByAccounts(ids, context);
@@ -86,7 +86,6 @@ public class Profiles
         return response;
 
     }
-
 
 
     #endregion
@@ -99,7 +98,7 @@ public class Profiles
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data, Conexión context)
+    public static async Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data, Conexión context)
     {
         // ID
         data.Profile.Id = 0;
@@ -124,7 +123,7 @@ public class Profiles
     /// </summary>
     /// <param name="id">ID del perfil</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<ReadOneResponse<ProfileModel>> Read(int id, Conexión context)
+    public static async Task<ReadOneResponse<ProfileModel>> Read(int id, Conexión context)
     {
 
 
@@ -151,7 +150,7 @@ public class Profiles
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id, Conexión context)
+    public static async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id, Conexión context)
     {
 
 
@@ -177,7 +176,7 @@ public class Profiles
 
 
 
-    public async static Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids, Conexión context)
+    public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids, Conexión context)
     {
 
 

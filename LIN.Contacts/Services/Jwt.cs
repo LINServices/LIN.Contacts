@@ -45,8 +45,7 @@ public class Jwt
         // Reclamaciones
         var claims = new[]
         {
-            new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
-            new Claim(ClaimTypes.UserData, user.AccountId.ToString())
+            new Claim(ClaimTypes.PrimarySid, user.Id.ToString()), new Claim(ClaimTypes.UserData, user.AccountId.ToString())
         };
 
         // Expiración del token

@@ -13,11 +13,11 @@ public class Contacts
     /// Crea un contacto.
     /// </summary>
     /// <param name="data">Modelo.</param>
-    public async static Task<CreateResponse> Create(ContactModel data)
+    public static async Task<CreateResponse> Create(ContactModel data)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await Create(data, context);
@@ -34,11 +34,11 @@ public class Contacts
     /// Obtiene un contacto
     /// </summary>
     /// <param name="id">ID del contacto</param>
-    public async static Task<ReadOneResponse<ContactModel>> Read(int id)
+    public static async Task<ReadOneResponse<ContactModel>> Read(int id)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await Read(id, context);
@@ -55,11 +55,11 @@ public class Contacts
     /// Obtiene los contactos asociados a un perfil
     /// </summary>
     /// <param name="id">ID del perfil</param>
-    public async static Task<ReadAllResponse<ContactModel>> ReadAll(int id)
+    public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
     {
 
         // Contexto
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         // respuesta
         var response = await ReadAll(id, context);
@@ -81,7 +81,7 @@ public class Contacts
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<CreateResponse> Create(ContactModel data, Conexión context)
+    public static async Task<CreateResponse> Create(ContactModel data, Conexión context)
     {
         // Ejecución
         try
@@ -112,7 +112,7 @@ public class Contacts
     /// </summary>
     /// <param name="id">ID del contacto</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
+    public static async Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
     {
 
 
@@ -147,7 +147,7 @@ public class Contacts
     /// </summary>
     /// <param name="id">ID del perfil.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public async static Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
+    public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
     {
 
 
@@ -156,17 +156,17 @@ public class Contacts
         {
 
             // Query de contactos
-            var contacts = await (from P in context.DataBase.Contacts
-                                  where P.Im.Id == id
-                                  orderby P.Nombre
+            var contacts = await (from contact in context.DataBase.Contacts
+                                  where contact.Im.Id == id
+                                  orderby contact.Nombre
                                   select new ContactModel
                                   {
-                                      Birthday = P.Birthday,
-                                      Id = P.Id,
-                                      Mails = P.Mails,
-                                      Nombre = P.Nombre,
-                                      Type = P.Type,
-                                      Phones = P.Phones
+                                      Birthday = contact.Birthday,
+                                      Id = contact.Id,
+                                      Mails = contact.Mails,
+                                      Nombre = contact.Nombre,
+                                      Type = contact.Type,
+                                      Phones = contact.Phones
                                   }).ToListAsync();
 
             return new(Responses.Success, contacts);
