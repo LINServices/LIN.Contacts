@@ -7,27 +7,26 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Inicia una sesion de usuario
+    /// Inicia una sesión de usuario.
     /// </summary>
-    /// <param name="user">Usuario �nico</param>
-    /// <param name="password">Contrase�a del usuario</param>
-    /// <param name="app">Key de la app que solicita la informaci�n</param>
+    /// <param name="user">Usuario único</param>
+    /// <param name="password">Contraseña del usuario</param>
     [HttpGet("login")]
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Comprobaci�n
+        // Comprobación
         if (!user.Any() || !password.Any())
             return new(Responses.InvalidParam);
 
-        // Respuesta de autenticaci�n
+        // Respuesta de autenticación.
         var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
 
-        // Autenticaci�n err�nea
+        // Autenticación errónea.
         if (authResponse.Response != Responses.Success)
             return new ReadOneResponse<AuthModel<ProfileModel>>
             {
-                Message = "Autenticaci�n fallida",
+                Message = "Autenticación fallida",
                 Response = authResponse.Response
             };
 

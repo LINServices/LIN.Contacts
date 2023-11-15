@@ -5,7 +5,6 @@ public class Profiles
 {
 
 
-
     #region Abstracciones
 
 
@@ -31,7 +30,7 @@ public class Profiles
 
 
     /// <summary>
-    /// Obtiene un perfil
+    /// Obtiene un perfil.
     /// </summary>
     /// <param name="id">ID del perfil</param>
     public static async Task<ReadOneResponse<ProfileModel>> Read(int id)
@@ -52,9 +51,9 @@ public class Profiles
 
 
     /// <summary>
-    /// Obtiene un perfil por medio del ID de su cuenta.
+    /// Obtiene un perfil por medio del Id de su cuenta.
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
+    /// <param name="id">Id de la cuenta</param>
     public static async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id)
     {
 
@@ -72,6 +71,10 @@ public class Profiles
 
 
 
+    /// <summary>
+    /// Obtiene perfiles según los Id de las cuentas.
+    /// </summary>
+    /// <param name="ids">Lista de Ids.</param>
     public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids)
     {
 
@@ -88,8 +91,8 @@ public class Profiles
     }
 
 
-    #endregion
 
+    #endregion
 
 
 
@@ -153,15 +156,15 @@ public class Profiles
     public static async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id, Conexión context)
     {
 
-
         // Ejecución
         try
         {
-
+            // Consulta.
             var profile = await (from P in context.DataBase.Profiles
                                  where P.AccountId == id
                                  select P).FirstOrDefaultAsync();
 
+            // Si no existe.
             if (profile == null)
                 return new(Responses.NotExistProfile);
 
@@ -175,7 +178,11 @@ public class Profiles
 
 
 
-
+    /// <summary>
+    /// Obtiene perfiles según los Id de las cuentas.
+    /// </summary>
+    /// <param name="ids">Lista de Ids.</param>
+    /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids, Conexión context)
     {
 
@@ -198,7 +205,6 @@ public class Profiles
         }
         return new();
     }
-
 
 
 
