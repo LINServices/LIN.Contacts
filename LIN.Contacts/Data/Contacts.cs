@@ -87,12 +87,15 @@ public class Contacts
         try
         {
 
+            // Establecer el perfil.
             foreach (var e in data.Mails)
                 e.Profile = data.Im;
 
+            // Establecer el perfil.
             foreach (var e in data.Phones)
                 e.Profile = data.Im;
 
+            // El usuario ya existe.
             context.DataBase.Attach(data.Im);
 
             var res = context.DataBase.Contacts.Add(data);
@@ -124,6 +127,7 @@ public class Contacts
                                  where P.Id == id
                                  select new ContactModel
                                  {
+                                     Picture = P.Picture,
                                      Birthday = P.Birthday,
                                      Id = P.Id,
                                      Mails = P.Mails,
@@ -161,6 +165,7 @@ public class Contacts
                                   orderby contact.Nombre
                                   select new ContactModel
                                   {
+                                      Picture = contact.Picture,
                                       Birthday = contact.Birthday,
                                       Id = contact.Id,
                                       Mails = contact.Mails,
