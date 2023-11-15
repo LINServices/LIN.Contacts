@@ -9,22 +9,26 @@ public class EmmaController : ControllerBase
 {
 
 
-
-
-
+    /// <summary>
+    /// Emma IA.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="consult">Prompt.</param>
     [HttpPost]
     public async Task<HttpReadOneResponse<ResponseIAModel>> ReadAll([FromHeader] string token, [FromBody] string consult)
     {
 
+        // Información del token.
         var (isValid, profileID, _) = Jwt.Validate(token);
 
+        // El token es invalido.
         if (!isValid)
-        {
-            return new ReadOneResponse<ResponseIAModel>()
+            return new()
             {
+                Message = "El token es invalido.",
                 Response = Responses.Unauthorized
             };
-        }
+
 
         var getProf = Mems.Sessions[profileID];
 
@@ -51,8 +55,6 @@ public class EmmaController : ControllerBase
         };
 
     }
-
-
 
 
 }
