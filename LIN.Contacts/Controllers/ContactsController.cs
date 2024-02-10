@@ -4,7 +4,7 @@ namespace LIN.Contacts.Controllers;
 
 
 [Route("contacts")]
-internal class ContactsController : ControllerBase
+public class ContactsController : ControllerBase
 {
 
 

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Http", "..\..\Tipos\Http\Ht
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types", "..\..\Tipos\LIN.Types\LIN.Types.csproj", "{77BE374F-7DCB-45DC-8B1F-0B7D02F073BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Auth", "..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj", "{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Contacts", "..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj", "{E17C82F9-C5B8-4B69-A83A-6EDE2605D581}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj", "{F656533C-C2C5-44A2-A02B-82184C12D99A}"
@@ -22,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Logger", "..\..\AccesoAPI\LIN.Access.Logger\LIN.Access.Logger.csproj", "{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +55,6 @@ Global
 		{77BE374F-7DCB-45DC-8B1F-0B7D02F073BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77BE374F-7DCB-45DC-8B1F-0B7D02F073BC}.Release|x86.ActiveCfg = Release|Any CPU
 		{77BE374F-7DCB-45DC-8B1F-0B7D02F073BC}.Release|x86.Build.0 = Release|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Debug|x86.Build.0 = Debug|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Release|x86.ActiveCfg = Release|Any CPU
-		{0B37F2C5-BACC-4187-85B2-5F9FF6AE87C3}.Release|x86.Build.0 = Release|Any CPU
 		{E17C82F9-C5B8-4B69-A83A-6EDE2605D581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E17C82F9-C5B8-4B69-A83A-6EDE2605D581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E17C82F9-C5B8-4B69-A83A-6EDE2605D581}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -111,6 +103,14 @@ Global
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Release|x86.ActiveCfg = Release|Any CPU
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Release|x86.Build.0 = Release|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -33,7 +33,7 @@ public class Contacts
     /// <summary>
     /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">ID del contacto</param>
+    /// <param name="id">Id del contacto</param>
     public static async Task<ReadOneResponse<ContactModel>> Read(int id)
     {
 
@@ -54,7 +54,7 @@ public class Contacts
     /// <summary>
     /// Obtiene los contactos asociados a un perfil
     /// </summary>
-    /// <param name="id">ID del perfil</param>
+    /// <param name="id">Id del perfil</param>
     public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
     {
 
@@ -63,6 +63,27 @@ public class Contacts
 
         // respuesta
         var response = await ReadAll(id, context);
+
+        context.CloseActions(connectionKey);
+
+        return response;
+
+    }
+
+
+
+
+
+
+
+    public static async Task<ResponseBase> Delete(int id)
+    {
+
+        // Contexto
+        (var context, var connectionKey) = Conexión.GetOneConnection();
+
+        // respuesta
+        var response = await Delete(id, context);
 
         context.CloseActions(connectionKey);
 
@@ -113,11 +134,10 @@ public class Contacts
     /// <summary>
     /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">ID del contacto</param>
+    /// <param name="id">Id del contacto</param>
     /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
     {
-
 
         // Ejecución
         try
@@ -149,7 +169,7 @@ public class Contacts
     /// <summary>
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
-    /// <param name="id">ID del perfil.</param>
+    /// <param name="id">Id del perfil.</param>
     /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
     {
@@ -175,6 +195,31 @@ public class Contacts
                                   }).ToListAsync();
 
             return new(Responses.Success, contacts);
+        }
+        catch
+        {
+        }
+        return new();
+    }
+
+
+
+    /// <summary>
+    /// Eliminar un contacto.
+    /// </summary>
+    /// <param name="id">Id del contacto.</param>
+    /// <param name="context">Contexto de conexión.</param>
+    public static async Task<ResponseBase> Delete(int id, Conexión context)
+    {
+
+        // Ejecución
+        try
+        {
+
+            // Eliminar.
+            await context.DataBase.Contacts.Where(t => t.Id == id).ExecuteDeleteAsync();
+
+            return new(Responses.Success);
         }
         catch
         {
