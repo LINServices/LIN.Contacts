@@ -52,6 +52,28 @@ public class Contacts
 
 
     /// <summary>
+    /// Validar IAM.
+    /// </summary>
+    /// <param name="contact">Id del contacto.</param>
+    /// <param name="profile">Id del perfil.</param>
+    public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile)
+    {
+
+        // Contexto
+        (var context, var connectionKey) = Conexión.GetOneConnection();
+
+        // respuesta
+        var response = await Iam(contact, profile, context);
+
+        context.CloseActions(connectionKey);
+
+        return response;
+
+    }
+
+
+
+    /// <summary>
     /// Obtiene los contactos asociados a un perfil
     /// </summary>
     /// <param name="id">Id del perfil</param>
@@ -157,6 +179,38 @@ public class Contacts
                                  }).FirstOrDefaultAsync();
 
             return new(Responses.Success, profile ?? new());
+        }
+        catch
+        {
+        }
+        return new();
+    }
+
+
+
+    /// <summary>
+    /// Obtiene un contacto
+    /// </summary>
+    /// <param name="id">Id del contacto</param>
+    /// <param name="context">Contexto de conexión.</param>
+    public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile, Conexión context)
+    {
+
+        // Ejecución
+        try
+        {
+
+            var have = await (from P in context.DataBase.Contacts
+                              where P.Id == contact
+                              && P.Im.Id == profile
+                              select P.Id
+                                 ).FirstOrDefaultAsync();
+
+
+            if (have <= 0)
+                return new(Responses.Unauthorized);
+
+            return new(Responses.Success, true);
         }
         catch
         {

@@ -9,46 +9,58 @@ public class EmmaController : ControllerBase
 {
 
 
+
     /// <summary>
     /// Emma IA.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     /// <param name="consult">Prompt.</param>
-    [HttpPost]
-    public async Task<HttpReadOneResponse<ResponseIAModel>> ReadAll([FromHeader] string token, [FromBody] string consult)
+    [HttpGet]
+    public async Task<HttpReadOneResponse<object>> RequestFromEmma([FromHeader] string tokenAuth)
     {
 
-        // Información del token.
-        var (isValid, profileID, _) = Jwt.Validate(token);
+        // Validar token.
+        var response = await LIN.Access.Auth.Controllers.Authentication.Login(tokenAuth);
 
-        // El token es invalido.
-        if (!isValid)
-            return new()
+
+        if (response.Response != Responses.Success)
+        {
+            return new ReadOneResponse<object>()
             {
-                Message = "El token es invalido.",
-                Response = Responses.Unauthorized
+                Model = "Este usuario no autenticado en LIN Contactos."
             };
+        }
+
+        // 
+        var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
 
 
-        var getProf = Mems.Sessions[profileID];
+        if (profile.Response != Responses.Success)
+        {
+            return new ReadOneResponse<object>()
+            {
+                Model = "Este usuario no tiene una cuenta en LIN Contactos."
+            };
+        }
 
-        var iaModel = new Access.OpenIA.IAModelBuilder(Configuration.GetConfiguration("openIa:key"));
 
-        iaModel.Load(IaConsts.Base);
-        iaModel.Load(IaConsts.Personalidad);
+        var getProf = Mems.Sessions[profile.Model.Id];
 
-        iaModel.Load($"""
-                      Estas en el contexto de LIN Contacts, la app de agenda de contactos de LIN Platform.
-                      Estos son los contactos que tiene el usuario: {getProf?.StringOfContacts()}
-                      Recuerda que el usuario puede preguntar información acerca de sus contactos y deveras contestar acertadamente.
-                      """);
-        iaModel.Load($"""
-                      El usuario tiene {getProf?.Contactos.Count} contactos asociados a su cuenta.
-                      """);
+        if (getProf == null)
+        {
 
-        var final = await iaModel.Reply(consult);
+            getProf = new MemorySession()
+            {
+                Profile = profile.Model,
+                Contactos = (await Data.Contacts.ReadAll(profile.Model.Id)).Models,
+            };
+            Mems.Sessions.Add(getProf);
+        }
 
-        return new ReadOneResponse<ResponseIAModel>()
+
+        var final = getProf?.StringOfContacts() ?? "No hay contactos";
+
+        return new ReadOneResponse<object>()
         {
             Model = final,
             Response = Responses.Success

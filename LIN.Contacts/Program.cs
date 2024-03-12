@@ -67,6 +67,8 @@ Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 App.Open();
 
+LIN.Access.Auth.Build.Init();
+
 app.MapControllers();
 
 app.Run();

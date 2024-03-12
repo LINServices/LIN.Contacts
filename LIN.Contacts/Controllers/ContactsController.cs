@@ -103,4 +103,48 @@ public class ContactsController : ControllerBase
     }
 
 
+
+   /// <summary>
+   /// Obtener un contacto.
+   /// </summary>
+   /// <param name="id">Id del contacto.</param>
+   /// <param name="token">Token de acceso.</param>
+    [HttpGet]
+    public async Task<HttpReadOneResponse<ContactModel>> Read([FromQuery] int id, [FromHeader] string token)
+    {
+
+        // Info dek token
+        var (isValid, profile, _) = Jwt.Validate(token);
+
+        // Token es invalido.
+        if (!isValid)
+            return new ReadOneResponse<ContactModel>()
+            {
+                Message = "Token invalido",
+                Response = Responses.Unauthorized
+            };
+
+        // Validar IAM.
+        var authorization = await Data.Contacts.Iam(id, profile);
+
+        if (authorization.Response != Responses.Success)
+            return new ReadOneResponse<ContactModel>()
+            {
+                Message = "No tienes permiso para acceder a este contacto.",
+                Response = Responses.Unauthorized
+            };
+
+        // Obtiene los contactos
+        var model = await Data.Contacts.Read(id);
+
+        // Respuesta.
+        return new ReadOneResponse<ContactModel>()
+        {
+            Model = model.Model,
+            Response = Responses.Success
+        };
+
+    }
+
+
 }
