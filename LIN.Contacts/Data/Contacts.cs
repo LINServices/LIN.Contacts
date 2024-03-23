@@ -12,7 +12,7 @@ public class Contacts
     /// <summary>
     /// Crea un contacto.
     /// </summary>
-    /// <param name="data">Modelo.</param>
+    /// <param contact="data">Modelo.</param>
     public static async Task<CreateResponse> Create(ContactModel data)
     {
 
@@ -33,7 +33,7 @@ public class Contacts
     /// <summary>
     /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">Id del contacto</param>
+    /// <param contact="id">Id del contacto</param>
     public static async Task<ReadOneResponse<ContactModel>> Read(int id)
     {
 
@@ -54,8 +54,8 @@ public class Contacts
     /// <summary>
     /// Validar IAM.
     /// </summary>
-    /// <param name="contact">Id del contacto.</param>
-    /// <param name="profile">Id del perfil.</param>
+    /// <param contact="contact">Id del contacto.</param>
+    /// <param contact="profile">Id del perfil.</param>
     public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile)
     {
 
@@ -76,7 +76,7 @@ public class Contacts
     /// <summary>
     /// Obtiene los contactos asociados a un perfil
     /// </summary>
-    /// <param name="id">Id del perfil</param>
+    /// <param contact="id">Id del perfil</param>
     public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
     {
 
@@ -94,10 +94,10 @@ public class Contacts
 
 
 
-
-
-
-
+    /// <summary>
+    /// Eliminar un contacto.
+    /// </summary>
+    /// <param contact="id">Id del contacto.</param>
     public static async Task<ResponseBase> Delete(int id)
     {
 
@@ -114,6 +114,27 @@ public class Contacts
     }
 
 
+
+    /// <summary>
+    /// Actualizar un contacto.
+    /// </summary>
+    /// <param contact="id">Id del contacto.</param>
+    public static async Task<ResponseBase> Update(ContactModel contactModel)
+    {
+
+        // Contexto
+        (var context, var connectionKey) = Conexión.GetOneConnection();
+
+        // respuesta
+        var response = await Update(contactModel, context);
+
+        context.CloseActions(connectionKey);
+
+        return response;
+
+    }
+
+
     #endregion
 
 
@@ -122,8 +143,8 @@ public class Contacts
     /// <summary>
     /// Crea un contacto.
     /// </summary>
-    /// <param name="data">Modelo.</param>
-    /// <param name="context">Contexto de conexión.</param>
+    /// <param contact="data">Modelo.</param>
+    /// <param contact="context">Contexto de conexión.</param>
     public static async Task<CreateResponse> Create(ContactModel data, Conexión context)
     {
         // Ejecución
@@ -156,8 +177,8 @@ public class Contacts
     /// <summary>
     /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">Id del contacto</param>
-    /// <param name="context">Contexto de conexión.</param>
+    /// <param contact="id">Id del contacto</param>
+    /// <param contact="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
     {
 
@@ -191,8 +212,8 @@ public class Contacts
     /// <summary>
     /// Obtiene un contacto
     /// </summary>
-    /// <param name="id">Id del contacto</param>
-    /// <param name="context">Contexto de conexión.</param>
+    /// <param contact="id">Id del contacto</param>
+    /// <param contact="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile, Conexión context)
     {
 
@@ -223,8 +244,8 @@ public class Contacts
     /// <summary>
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
-    /// <param name="id">Id del perfil.</param>
-    /// <param name="context">Contexto de conexión.</param>
+    /// <param contact="id">Id del perfil.</param>
+    /// <param contact="context">Contexto de conexión.</param>
     public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
     {
 
@@ -272,6 +293,56 @@ public class Contacts
 
             // Eliminar.
             await context.DataBase.Contacts.Where(t => t.Id == id).ExecuteDeleteAsync();
+
+            return new(Responses.Success);
+        }
+        catch
+        {
+        }
+        return new();
+    }
+
+
+
+    /// <summary>
+    /// Actualizar un contacto.
+    /// </summary>
+    /// <param name="id">Id del contacto.</param>
+    /// <param name="contactModel">Modelo del contacto.</param>
+    /// <param name="context">Contexto.</param>
+    public static async Task<ResponseBase> Update(ContactModel contactModel, Conexión context)
+    {
+
+        // Ejecución
+        try
+        {
+
+            // Eliminar.
+            await context.DataBase.Contacts.Where(t => t.Id == contactModel.Id).ExecuteUpdateAsync(
+                setters =>
+                    setters.SetProperty(contact => contact.Picture, b => contactModel.Picture ?? b.Picture).
+                            SetProperty(contact => contact.Nombre, b => contactModel.Nombre ?? b.Nombre)
+                );
+
+
+            // Actualizar números.
+            foreach (var phone in contactModel.Phones)
+            {
+                await context.DataBase.Phones.Where(t => t.Id == phone.Id).ExecuteUpdateAsync(
+                setters =>
+                    setters.SetProperty(contact => contact.Number, b => phone.Number ?? b.Number)
+                );
+            }
+
+
+            // Actualizar correos.
+            foreach (var mails in contactModel.Mails)
+            {
+                await context.DataBase.Mails.Where(t => t.Id == mails.Id).ExecuteUpdateAsync(
+                setters =>
+                    setters.SetProperty(contact => contact.Email, b => mails.Email ?? b.Email)
+                );
+            }
 
             return new(Responses.Success);
         }

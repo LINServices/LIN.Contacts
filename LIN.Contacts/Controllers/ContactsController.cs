@@ -90,11 +90,11 @@ public class ContactsController : ControllerBase
 
 
 
-   /// <summary>
-   /// Obtener un contacto.
-   /// </summary>
-   /// <param name="id">Id del contacto.</param>
-   /// <param name="token">Token de acceso.</param>
+    /// <summary>
+    /// Obtener un contacto.
+    /// </summary>
+    /// <param name="id">Id del contacto.</param>
+    /// <param name="token">Token de acceso.</param>
     [HttpGet]
     [LocalToken]
     public async Task<HttpReadOneResponse<ContactModel>> Read([FromQuery] int id, [FromHeader] string token)
@@ -126,7 +126,7 @@ public class ContactsController : ControllerBase
     }
 
 
-    
+
     /// <summary>
     /// Eliminar un contacto.
     /// </summary>
@@ -153,6 +153,44 @@ public class ContactsController : ControllerBase
 
         // Obtiene los contactos
         var res = await Data.Contacts.Delete(id);
+
+        // Respuesta.
+        return new()
+        {
+            Response = res.Response
+        };
+
+    }
+
+
+
+    /// <summary>
+    /// Actualizar el contacto.
+    /// </summary>
+    /// <param name="id">Id del contacto.</param>
+    /// <param name="updateModel">Modelo</param>
+    /// <param name="token">Token.</param>
+    [HttpPatch]
+    [LocalToken]
+    public async Task<HttpResponseBase> Update(ContactModel updateModel, [FromHeader] string token)
+    {
+
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
+
+
+        // Validar IAM.
+        var authorization = await Data.Contacts.Iam(updateModel.Id, tokenInfo.ProfileId);
+
+        if (authorization.Response != Responses.Success)
+            return new ReadOneResponse<ContactModel>()
+            {
+                Message = "No tienes permiso para acceder a este contacto.",
+                Response = Responses.Unauthorized
+            };
+
+        // Obtiene los contactos
+        var res = await Data.Contacts.Update(updateModel);
 
         // Respuesta.
         return new()
