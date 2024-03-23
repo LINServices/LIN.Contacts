@@ -1,5 +1,3 @@
-using LIN.Contacts.Memory;
-
 namespace LIN.Contacts.Controllers;
 
 
