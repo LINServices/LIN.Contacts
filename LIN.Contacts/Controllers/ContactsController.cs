@@ -1,3 +1,5 @@
+using LIN.Contacts.Services.Models;
+
 namespace LIN.Contacts.Controllers;
 
 
@@ -12,19 +14,12 @@ public class ContactsController : ControllerBase
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
     [HttpPost]
+    [LocalToken]
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] ContactModel model)
     {
 
-        // Info del token.
-        var (isValid, profileId, _) = Jwt.Validate(token);
-
-        // Si el token es invalido.
-        if (!isValid)
-            return new CreateResponse()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar
         if (model.Nombre.Trim().Length <= 0)
@@ -37,7 +32,7 @@ public class ContactsController : ControllerBase
         // Agrega de quien es el contacto
         model.Im = new()
         {
-            Id = profileId
+            Id = tokenInfo.ProfileId
         };
 
         // Crear el contacto
@@ -54,25 +49,18 @@ public class ContactsController : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
+    [LocalToken]
     public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token)
     {
 
-        // Info dek token
-        var (isValid, profileId, _) = Jwt.Validate(token);
-
-        // Token es invalido.
-        if (!isValid)
-            return new ReadAllResponse<ContactModel>()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Obtiene los contactos
-        var all = await Data.Contacts.ReadAll(profileId);
+        var all = await Data.Contacts.ReadAll(tokenInfo.ProfileId);
 
         // Registra en el memory
-        var profileOnMemory = Mems.Sessions[profileId];
+        var profileOnMemory = Mems.Sessions[tokenInfo.ProfileId];
 
         if (profileOnMemory == null)
         {
@@ -81,7 +69,7 @@ public class ContactsController : ControllerBase
                 Contactos = all.Models,
                 Profile = new()
                 {
-                    Id = profileId
+                    Id = tokenInfo.ProfileId
                 }
             });
         }
@@ -108,22 +96,15 @@ public class ContactsController : ControllerBase
    /// <param name="id">Id del contacto.</param>
    /// <param name="token">Token de acceso.</param>
     [HttpGet]
+    [LocalToken]
     public async Task<HttpReadOneResponse<ContactModel>> Read([FromQuery] int id, [FromHeader] string token)
     {
 
-        // Info dek token
-        var (isValid, profile, _) = Jwt.Validate(token);
-
-        // Token es invalido.
-        if (!isValid)
-            return new ReadOneResponse<ContactModel>()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
-        var authorization = await Data.Contacts.Iam(id, profile);
+        var authorization = await Data.Contacts.Iam(id, tokenInfo.ProfileId);
 
         if (authorization.Response != Responses.Success)
             return new ReadOneResponse<ContactModel>()
@@ -139,7 +120,7 @@ public class ContactsController : ControllerBase
         return new ReadOneResponse<ContactModel>()
         {
             Model = model.Model,
-            Response = Responses.Success
+            Response = model.Response
         };
 
     }
@@ -152,22 +133,16 @@ public class ContactsController : ControllerBase
     /// <param name="id">Id del contacto.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpDelete]
+    [LocalToken]
     public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
     {
 
-        // Info dek token
-        var (isValid, profile, _) = Jwt.Validate(token);
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
-        // Token es invalido.
-        if (!isValid)
-            return new ReadOneResponse<ContactModel>()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
 
         // Validar IAM.
-        var authorization = await Data.Contacts.Iam(id, profile);
+        var authorization = await Data.Contacts.Iam(id, tokenInfo.ProfileId);
 
         if (authorization.Response != Responses.Success)
             return new ReadOneResponse<ContactModel>()
@@ -186,6 +161,7 @@ public class ContactsController : ControllerBase
         };
 
     }
+
 
 
 }

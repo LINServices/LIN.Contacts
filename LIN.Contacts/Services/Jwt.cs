@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using LIN.C.Services.Models;
+using LIN.Contacts.Services.Models;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -63,7 +65,7 @@ public class Jwt
     /// Valida un JSON Web token
     /// </summary>
     /// <param name="token">Token a validar</param>
-    internal static (bool isValid, int profileId, int accountId) Validate(string token)
+    internal static JwtModel Validate(string token)
     {
         try
         {
@@ -97,7 +99,12 @@ public class Jwt
 
 
                 // Devuelve una respuesta exitosa
-                return (true, id, accountId);
+                return new()
+                {
+                    IsAuthenticated = true,
+                    AccountId = accountId,
+                    ProfileId = id
+                };
 
             }
             catch (SecurityTokenException)
@@ -109,7 +116,7 @@ public class Jwt
         }
         catch { }
 
-        return (false, 0, 0);
+        return new();
 
     }
 
