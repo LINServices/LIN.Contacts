@@ -1,12 +1,12 @@
 # Servidor de Agenda de Contactos
 
-Este es un servidor de agenda de contactos desarrollado en .NET 7 y utilizando Entity Framework Core con SQL Server como base de datos. El servidor proporciona una API para gestionar los contactos, permitiendo crear, leer, actualizar y eliminar registros de contactos.
+Este es un servidor de agenda de contactos desarrollado en .NET 8 y utilizando Entity Framework Core con SQL Server como base de datos. El servidor proporciona una API para gestionar los contactos, permitiendo crear, leer, actualizar y eliminar registros de contactos.
 
 ## Requisitos Previos
 
 Asegúrate de tener los siguientes requisitos previos instalados en tu sistema:
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [SQL Server](https://www.microsoft.com/sql-server/)
 
 ## Configuración
@@ -41,4 +41,4 @@ Si deseas contribuir a este proyecto, por favor abre un _pull request_ y describ
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT.
+Revice cuidadosamente la licencia de este proyecto.

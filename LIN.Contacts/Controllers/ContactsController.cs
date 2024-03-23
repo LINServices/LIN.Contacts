@@ -147,4 +147,47 @@ public class ContactsController : ControllerBase
     }
 
 
+    
+    /// <summary>
+    /// Eliminar un contacto.
+    /// </summary>
+    /// <param name="id">Id del contacto.</param>
+    /// <param name="token">Token de acceso.</param>
+    [HttpDelete]
+    public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
+    {
+
+        // Info dek token
+        var (isValid, profile, _) = Jwt.Validate(token);
+
+        // Token es invalido.
+        if (!isValid)
+            return new ReadOneResponse<ContactModel>()
+            {
+                Message = "Token invalido",
+                Response = Responses.Unauthorized
+            };
+
+        // Validar IAM.
+        var authorization = await Data.Contacts.Iam(id, profile);
+
+        if (authorization.Response != Responses.Success)
+            return new ReadOneResponse<ContactModel>()
+            {
+                Message = "No tienes permiso para acceder a este contacto.",
+                Response = Responses.Unauthorized
+            };
+
+        // Obtiene los contactos
+        var res = await Data.Contacts.Delete(id);
+
+        // Respuesta.
+        return new()
+        {
+            Response = res.Response
+        };
+
+    }
+
+
 }

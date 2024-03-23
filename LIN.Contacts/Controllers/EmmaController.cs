@@ -1,7 +1,3 @@
-using LIN.Contacts.Memory;
-using LIN.Types.Emma.Models;
-using System.Text;
-
 namespace LIN.Contacts.Controllers;
 
 
@@ -12,40 +8,39 @@ public class EmmaController : ControllerBase
 
 
     /// <summary>
-    /// Consulta para LIN Allo Emma.
+    /// Respuesta de Emma al usuario.
     /// </summary>
-    /// <param name="token">Token de acceso.</param>
-    /// <param name="consult">Consulta.</param>
+    /// <param name="tokenAuth">Token de identity.</param>
+    /// <param name="consult">Consulta del usuario.</param>
     [HttpPost]
     public async Task<HttpReadOneResponse<ResponseIAModel>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
     {
 
+        // Cliente HTTP.
+        HttpClient client = new();
 
-
-        HttpClient client = new HttpClient();
-
+        // Headers.
         client.DefaultRequestHeaders.Add("token", tokenAuth);
         client.DefaultRequestHeaders.Add("useDefaultContext", true.ToString().ToLower());
 
-
+        // Modelo de Emma.
         var request = new LIN.Types.Models.EmmaRequest
         {
             AppContext = "contacts",
             Asks = consult
         };
 
-
-
+        // Generar el string content.
         StringContent stringContent = new(Newtonsoft.Json.JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
+        // Solicitud HTTP.
         var result = await client.PostAsync("http://api.emma.linapps.co/emma", stringContent);
 
+        // Esperar respuesta.
+        var response = await result.Content.ReadAsStringAsync();
 
-        var ss = await result.Content.ReadAsStringAsync();
-
-
-        dynamic fin = Newtonsoft.Json.JsonConvert.DeserializeObject(ss);
-
+        // Objeto.
+        dynamic? @object = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
 
         // Respuesta
         return new ReadOneResponse<ResponseIAModel>()
@@ -53,7 +48,7 @@ public class EmmaController : ControllerBase
             Model = new()
             {
                 IsSuccess = true,
-                Content = fin?.result
+                Content = @object?.result
             },
             Response = Responses.Success
         };

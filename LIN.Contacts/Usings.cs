@@ -9,3 +9,7 @@ global using LIN.Types.Responses;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using LIN.Access.Logger;
+
+global using LIN.Contacts.Memory;
+global using LIN.Types.Emma.Models;
+global using System.Text;
