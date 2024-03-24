@@ -1,150 +1,16 @@
 ﻿namespace LIN.Contacts.Data;
 
 
-public class Contacts
+public partial class Contacts
 {
 
 
-
-    #region Abstracciones
-
-
     /// <summary>
-    /// Crea un contacto.
+    /// Crear nuevo contacto.
     /// </summary>
-    /// <param contact="data">Modelo.</param>
-    public static async Task<CreateResponse> Create(ContactModel data)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await Create(data, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Obtiene un contacto
-    /// </summary>
-    /// <param contact="id">Id del contacto</param>
-    public static async Task<ReadOneResponse<ContactModel>> Read(int id)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await Read(id, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Validar IAM.
-    /// </summary>
-    /// <param contact="contact">Id del contacto.</param>
-    /// <param contact="profile">Id del perfil.</param>
-    public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await Iam(contact, profile, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Obtiene los contactos asociados a un perfil
-    /// </summary>
-    /// <param contact="id">Id del perfil</param>
-    public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await ReadAll(id, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Eliminar un contacto.
-    /// </summary>
-    /// <param contact="id">Id del contacto.</param>
-    public static async Task<ResponseBase> Delete(int id)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await Delete(id, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Actualizar un contacto.
-    /// </summary>
-    /// <param contact="id">Id del contacto.</param>
-    public static async Task<ResponseBase> Update(ContactModel contactModel)
-    {
-
-        // Contexto
-        (var context, var connectionKey) = Conexión.GetOneConnection();
-
-        // respuesta
-        var response = await Update(contactModel, context);
-
-        context.CloseActions(connectionKey);
-
-        return response;
-
-    }
-
-
-    #endregion
-
-
-
-
-    /// <summary>
-    /// Crea un contacto.
-    /// </summary>
-    /// <param contact="data">Modelo.</param>
-    /// <param contact="context">Contexto de conexión.</param>
+    /// <param name="data">Modelo.</param>
+    /// <param name="context">Contexto.</param>
+    /// <returns></returns>
     public static async Task<CreateResponse> Create(ContactModel data, Conexión context)
     {
         // Ejecución
@@ -175,10 +41,10 @@ public class Contacts
 
 
     /// <summary>
-    /// Obtiene un contacto
+    /// Obtiene un contacto.
     /// </summary>
-    /// <param contact="id">Id del contacto</param>
-    /// <param contact="context">Contexto de conexión.</param>
+    /// <param name="id">Id del contacto</param>
+    /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
     {
 
@@ -210,10 +76,11 @@ public class Contacts
 
 
     /// <summary>
-    /// Obtiene un contacto
+    /// Acceso IAM en un contacto.
     /// </summary>
-    /// <param contact="id">Id del contacto</param>
-    /// <param contact="context">Contexto de conexión.</param>
+    /// <param name="contact">Id del contacto.</param>
+    /// <param name="profile">Id del perfil.</param>
+    /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile, Conexión context)
     {
 
@@ -244,8 +111,8 @@ public class Contacts
     /// <summary>
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
-    /// <param contact="id">Id del perfil.</param>
-    /// <param contact="context">Contexto de conexión.</param>
+    /// <param name="id">Id del perfil.</param>
+    /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
     {
 
