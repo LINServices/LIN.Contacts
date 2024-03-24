@@ -1,10 +1,6 @@
 
-
-// Servicio de errores.
-Logger.AppName = "LIN.Contacts";
-
-// Constructor.
-var builder = WebApplication.CreateBuilder(args);
+// Crear constructor.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // CORS.
 builder.Services.AddCors(options =>
@@ -18,7 +14,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 // Obtiene el string de conexión SQL.
 var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
 
@@ -28,14 +23,14 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(sqlConnection);
 });
 
-// Add services to the container.
+
+// Controladores.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Crear app.
 var app = builder.Build();
-
-
 
 try
 {
@@ -44,14 +39,14 @@ try
     var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
     var res = dataContext.Database.EnsureCreated();
 }
-catch (Exception ex)
+catch (Exception)
 {
-    _ = Logger.Log(ex, 3);
 }
 
+// Usar CORS.
 app.UseCors("AllowAnyOrigin");
 
-
+// Swagger.
 app.UseSwagger();
 app.UseSwaggerUI(config =>
 {
@@ -63,6 +58,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+// Establecer string de conexión.
 Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 App.Open();

@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "..\..\Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Emma", "..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj", "{E3269817-2FC0-409C-B4C3-DFC8AB190049}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Logger", "..\..\AccesoAPI\LIN.Access.Logger\LIN.Access.Logger.csproj", "{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}"
@@ -77,14 +75,6 @@ Global
 		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|x86.ActiveCfg = Release|Any CPU
 		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|x86.Build.0 = Release|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Debug|x86.Build.0 = Debug|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Release|x86.ActiveCfg = Release|Any CPU
-		{9BA4D56A-C09A-4D26-8707-76A7E100CBC2}.Release|x86.Build.0 = Release|Any CPU
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C44C7C7F-D2A9-4FE5-8740-B17D9C1BC04C}.Debug|x86.ActiveCfg = Debug|Any CPU

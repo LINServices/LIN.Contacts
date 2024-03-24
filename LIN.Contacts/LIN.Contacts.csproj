@@ -20,7 +20,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
-        <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Logger\LIN.Access.Logger.csproj" />
         <ProjectReference Include="..\..\..\Tipos\Http\Http.csproj" />
         <ProjectReference Include="..\..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
         <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
