@@ -107,7 +107,7 @@ public partial class Profiles
             if (profile == null)
                 return new(Responses.NotExistProfile);
 
-            return new(Responses.Success, profile ?? new());
+            return new(Responses.Success, profile ?? []);
         }
         catch
         {

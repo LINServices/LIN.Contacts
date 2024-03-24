@@ -24,7 +24,7 @@ public class MemorySession
     public MemorySession()
     {
         Profile = new();
-        Contactos = new();
+        Contactos = [];
     }
 
 

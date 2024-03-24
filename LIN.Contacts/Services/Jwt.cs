@@ -1,5 +1,4 @@
-﻿using LIN.C.Services.Models;
-using LIN.Contacts.Services.Models;
+﻿using LIN.Contacts.Services.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

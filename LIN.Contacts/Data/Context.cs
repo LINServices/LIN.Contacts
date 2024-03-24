@@ -1,7 +1,10 @@
 ﻿namespace LIN.Contacts.Data;
 
 
-public class Context : DbContext
+/// <summary>
+/// Nuevo contexto a la base de datos
+/// </summary>
+public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
 
 
@@ -27,13 +30,6 @@ public class Context : DbContext
     /// Tabla de teléfonos.
     /// </summary>
     public DbSet<PhoneModel> Phones { get; set; }
-
-
-
-    /// <summary>
-    /// Nuevo contexto a la base de datos
-    /// </summary>
-    public Context(DbContextOptions<Context> options) : base(options) { }
 
 
 
