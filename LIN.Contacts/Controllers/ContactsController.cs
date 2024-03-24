@@ -167,12 +167,11 @@ public class ContactsController : ControllerBase
     /// <summary>
     /// Actualizar el contacto.
     /// </summary>
-    /// <param name="id">Id del contacto.</param>
     /// <param name="updateModel">Modelo</param>
     /// <param name="token">Token.</param>
     [HttpPatch]
     [LocalToken]
-    public async Task<HttpResponseBase> Update(ContactModel updateModel, [FromHeader] string token)
+    public async Task<HttpResponseBase> Update([FromBody] ContactModel updateModel, [FromHeader] string token)
     {
 
         // Información del token.
