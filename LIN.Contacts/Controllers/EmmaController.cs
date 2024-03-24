@@ -58,10 +58,9 @@ public class EmmaController : ControllerBase
 
 
     /// <summary>
-    /// Emma IA.
+    /// Solicitud del servidor de Emma.
     /// </summary>
-    /// <param name="token">Token de acceso.</param>
-    /// <param name="consult">Prompt.</param>
+    /// <param name="tokenAuth">Token de acceso.</param>
     [HttpGet]
     public async Task<HttpReadOneResponse<object>> RequestFromEmma([FromHeader] string tokenAuth)
     {
