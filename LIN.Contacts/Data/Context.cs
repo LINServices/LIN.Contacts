@@ -44,6 +44,19 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
            .HasIndex(e => e.AccountId)
            .IsUnique();
 
+
+        modelBuilder.Entity<MailModel>()
+         .HasOne(m => m.Contact)
+         .WithMany(c => c.Mails)
+         .HasForeignKey(m => m.ContactId)
+         .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PhoneModel>()
+       .HasOne(m => m.Contact)
+       .WithMany(c => c.Phones)
+       .HasForeignKey(m => m.ContactId)
+       .OnDelete(DeleteBehavior.Cascade);
+
     }
 
 

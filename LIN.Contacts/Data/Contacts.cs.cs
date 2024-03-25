@@ -16,14 +16,6 @@ public partial class Contacts
         try
         {
 
-            // Establecer el perfil.
-            foreach (var e in data.Mails)
-                e.Profile = data.Im;
-
-            // Establecer el perfil.
-            foreach (var e in data.Phones)
-                e.Profile = data.Im;
-
             // El usuario ya existe.
             context.DataBase.Attach(data.Im);
 

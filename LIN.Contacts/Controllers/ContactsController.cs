@@ -140,7 +140,6 @@ public class ContactsController : ControllerBase
         // Información del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
-
         // Validar IAM.
         var authorization = await Data.Contacts.Iam(id, tokenInfo.ProfileId);
 
