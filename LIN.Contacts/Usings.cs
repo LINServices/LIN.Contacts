@@ -17,6 +17,4 @@ global using LIN.Types.Emma.Models;
 
 // Http.
 global using Http.ResponsesList;
-
-// Módulos.
-global using LIN.Modules;
+global using Global.Utilities;
