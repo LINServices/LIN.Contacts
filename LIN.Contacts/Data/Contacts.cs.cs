@@ -179,7 +179,8 @@ public partial class Contacts
             await context.DataBase.Contacts.Where(t => t.Id == contactModel.Id).ExecuteUpdateAsync(
                 setters =>
                     setters.SetProperty(contact => contact.Picture, b => contactModel.Picture ?? b.Picture).
-                            SetProperty(contact => contact.Nombre, b => contactModel.Nombre ?? b.Nombre)
+                            SetProperty(contact => contact.Nombre, b => contactModel.Nombre ?? b.Nombre).
+                            SetProperty(contact => contact.Type, contactModel.Type)
                 );
 
 
