@@ -28,6 +28,7 @@ builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 // Crear app.
 var app = builder.Build();
@@ -62,6 +63,8 @@ app.UseAuthorization();
 Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 App.Open();
+
+app.MapHub<ContactsHub>("/realTime/contacts");
 
 LIN.Access.Auth.Build.Init();
 

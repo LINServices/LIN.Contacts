@@ -1,11 +1,23 @@
+using Azure;
 using LIN.Contacts.Services.Models;
+using LIN.Types.Responses;
+using Microsoft.AspNetCore.SignalR;
 
 namespace LIN.Contacts.Controllers;
 
 
 [Route("contacts")]
-public class ContactsController : ControllerBase
+public class ContactsController(IHubContext<ContactsHub> hubContext) : ControllerBase
 {
+
+
+
+    /// <summary>
+    /// Hub de contexto.
+    /// </summary>
+    private readonly IHubContext<ContactsHub> _hubContext = hubContext;
+
+
 
 
     /// <summary>
@@ -37,6 +49,19 @@ public class ContactsController : ControllerBase
 
         // Crear el contacto
         var response = await Data.Contacts.Create(model);
+
+
+        // Si fue correcto.
+        if (response.Response == Responses.Success)
+        {
+            // Realtime.
+            string groupName = $"group.{tokenInfo.ProfileId}";
+            string command = $"addContact({response.LastID})";
+            await _hubContext.Clients.Group(groupName).SendAsync("#command", new CommandModel()
+            {
+                Command = command
+            });
+        }
 
         return response;
 
@@ -153,6 +178,18 @@ public class ContactsController : ControllerBase
         // Obtiene los contactos
         var res = await Data.Contacts.Delete(id);
 
+        // Si fue correcto.
+        if (res.Response == Responses.Success)
+        {
+            // Realtime.
+            string groupName = $"group.{tokenInfo.ProfileId}";
+            string command = $"removeContact({id})";
+            await _hubContext.Clients.Group(groupName).SendAsync("#command", new CommandModel()
+            {
+                Command = command
+            });
+        }
+
         // Respuesta.
         return new()
         {
@@ -189,6 +226,18 @@ public class ContactsController : ControllerBase
 
         // Obtiene los contactos
         var res = await Data.Contacts.Update(updateModel);
+
+        // Si fue correcto.
+        if (res.Response == Responses.Success)
+        {
+            // Realtime.
+            string groupName = $"group.{tokenInfo.ProfileId}";
+            string command = $"update({updateModel.Id})";
+            await _hubContext.Clients.Group(groupName).SendAsync("#command", new CommandModel()
+            {
+                Command = command
+            });
+        }
 
         // Respuesta.
         return new()
