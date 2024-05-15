@@ -1,18 +1,7 @@
+using Http.Extensions;
 
 // Crear constructor.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-// CORS.
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        });
-});
 
 // Obtiene el string de conexión SQL.
 var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
@@ -25,9 +14,8 @@ builder.Services.AddDbContext<Context>(options =>
 
 
 // Controladores.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddLINHttp();
+
 builder.Services.AddSignalR();
 
 // Crear app.
@@ -44,20 +32,8 @@ catch (Exception)
 {
 }
 
-// Usar CORS.
-app.UseCors("AllowAnyOrigin");
 
-// Swagger.
-app.UseSwagger();
-app.UseSwaggerUI(config =>
-{
-    config.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
-    config.RoutePrefix = string.Empty;
-});
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseLINHttp();
 
 // Establecer string de conexión.
 Conexión.SetStringConnection(sqlConnection);
