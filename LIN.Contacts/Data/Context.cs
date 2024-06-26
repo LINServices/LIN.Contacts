@@ -46,16 +46,16 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
 
 
         modelBuilder.Entity<MailModel>()
-         .HasOne(m => m.Contact)
-         .WithMany(c => c.Mails)
-         .HasForeignKey(m => m.ContactId)
-         .OnDelete(DeleteBehavior.Cascade);
+             .HasOne(m => m.Contact)
+             .WithMany(c => c.Mails)
+             .HasForeignKey(m => m.ContactId)
+             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<PhoneModel>()
-       .HasOne(m => m.Contact)
-       .WithMany(c => c.Phones)
-       .HasForeignKey(m => m.ContactId)
-       .OnDelete(DeleteBehavior.Cascade);
+               .HasOne(m => m.Contact)
+               .WithMany(c => c.Phones)
+               .HasForeignKey(m => m.ContactId)
+               .OnDelete(DeleteBehavior.Cascade);
 
     }
 

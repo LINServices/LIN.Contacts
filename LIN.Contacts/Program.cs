@@ -18,6 +18,9 @@ builder.Services.AddLINHttp();
 
 builder.Services.AddSignalR();
 
+// Services.
+builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>(); 
+
 // Crear app.
 var app = builder.Build();
 

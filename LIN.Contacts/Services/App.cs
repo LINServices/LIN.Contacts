@@ -1,4 +1,6 @@
-﻿namespace LIN.Contacts.Services;
+﻿using Http.Services;
+
+namespace LIN.Contacts.Services;
 
 
 public class App
