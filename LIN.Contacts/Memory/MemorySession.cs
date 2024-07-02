@@ -36,9 +36,9 @@ public class MemorySession
         var final = "IMPORTANTE contestar con la información del contacto o contactos del usuario. como el mail, el teléfono o numero, nombre etc.\r\nTIENES Acceso a los siguientes contactos:";
 
         foreach (var contact in Contactos)
-            final += $$""" { {{contact.Nombre}} su correo es {{contact.Mails[0].Email}}, el tipo de contacto es {{contact.Type}} y su teléfono {{contact.Phones[0].Number}}},""";
+            final += $$""" { {{contact.Nombre}} el correo es {{contact.Mails[0].Email}}, el tipo de contacto es {{contact.Type}} y el teléfono {{contact.Phones[0].Number}}},""";
 
-        return final + "\nRecuerda que siempre contesta con la información que el usuario requiere de los contactos.";
+        return final + "\nRecuerda que siempre contestar con la información que el usuario requiere de los contactos.";
     }
 
 }

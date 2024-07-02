@@ -1,7 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 
-[Route("Emma")]
+[Route("[controller]")]
 public class EmmaController : ControllerBase
 {
 
@@ -127,7 +127,6 @@ public class EmmaController : ControllerBase
 
                         El formato para responder con comandos es:
                         "#NombreDelComando(Propiedades en orden separados por coma si es necesario)"
-                        
                         
                         IMPORTANTE:
                         No en todos los casos en necesario usar comandos, solo úsalos cuando se cumpla la descripción.

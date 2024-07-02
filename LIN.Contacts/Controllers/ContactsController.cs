@@ -1,7 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 
-[Route("contacts")]
+[Route("[controller]")]
 public class ContactsController(ContactsHubActions hubContext) : ControllerBase
 {
 
@@ -157,10 +157,10 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
             };
 
         // Obtiene los contactos
-        var res = await Data.Contacts.Delete(id);
+        var result = await Data.Contacts.Delete(id);
 
         // Si fue correcto.
-        if (res.Response == Responses.Success)
+        if (result.Response == Responses.Success)
         {
             // Enviar comando.
             await hubContext.SendCommand(tokenInfo.ProfileId, $"removeContact({id})");
@@ -169,7 +169,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         // Respuesta.
         return new()
         {
-            Response = res.Response
+            Response = result.Response
         };
 
     }

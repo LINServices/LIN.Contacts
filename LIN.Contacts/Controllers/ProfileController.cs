@@ -1,7 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 
-[Route("profile")]
+[Route("[controller]")]
 public class ProfileController : ControllerBase
 {
 
