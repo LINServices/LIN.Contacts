@@ -156,7 +156,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
                 Response = Responses.Unauthorized
             };
 
-        // Obtiene los contactos
+        // Obtiene los contactos.
         var result = await Data.Contacts.Delete(id);
 
         // Si fue correcto.
