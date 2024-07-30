@@ -33,7 +33,7 @@ public class EmmaController : ControllerBase
         StringContent stringContent = new(Newtonsoft.Json.JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
         // Solicitud HTTP.
-        var result = await client.PostAsync("http://api.emma.linapps.co/emma", stringContent);
+        var result = await client.PostAsync("https://api.emma.linplatform.com/emma", stringContent);
 
         // Esperar respuesta.
         var response = await result.Content.ReadAsStringAsync();

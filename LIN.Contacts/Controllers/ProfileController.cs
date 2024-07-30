@@ -1,8 +1,10 @@
+using LIN.Contacts.Services.Authentication;
+
 namespace LIN.Contacts.Controllers;
 
 
 [Route("[controller]")]
-public class ProfileController : ControllerBase
+public class ProfileController(ICreateProfileService createService) : ControllerBase
 {
 
 
@@ -15,9 +17,12 @@ public class ProfileController : ControllerBase
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Comprobación
-        if (!user.Any() || !password.Any())
-            return new(Responses.InvalidParam);
+        // Validar entradas.
+        if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
+            return new(Responses.InvalidParam)
+            {
+                Message = "Usuario / contraseña no pueden estar vacíos"
+            };
 
         // Respuesta de autenticación.
         var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
@@ -30,7 +35,6 @@ public class ProfileController : ControllerBase
                 Response = authResponse.Response
             };
 
-
         // Obtiene el perfil
         var profile = await Profiles.ReadByAccount(authResponse.Model.Id);
 
@@ -41,26 +45,20 @@ public class ProfileController : ControllerBase
 
             case Responses.NotExistProfile:
                 {
-                    var res = await Profiles.Create(new()
-                    {
-                        Account = authResponse.Model,
-                        Profile = new()
-                        {
-                            AccountId = authResponse.Model.Id,
-                            Creation = DateTime.Now
-                        }
-                    });
 
-                    if (res.Response != Responses.Success)
+                    // Crear perfil.
+                    var response = await createService.Create(authResponse.Model);
+
+                    if (response.Response != Responses.Success)
                     {
                         return new ReadOneResponse<AuthModel<ProfileModel>>
                         {
                             Response = Responses.UnavailableService,
-                            Message = "Un error grave ocurri�"
+                            Message = response.Message
                         };
                     }
 
-                    profile = res;
+                    profile = response;
                     break;
                 }
 
@@ -68,7 +66,7 @@ public class ProfileController : ControllerBase
                 return new ReadOneResponse<AuthModel<ProfileModel>>
                 {
                     Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurri�"
+                    Message = "Un error grave ocurrió"
                 };
         }
 
@@ -125,26 +123,19 @@ public class ProfileController : ControllerBase
 
             case Responses.NotExistProfile:
                 {
-                    var res = await Profiles.Create(new()
-                    {
-                        Account = response.Model ,
-                        Profile = new()
-                        {
-                            AccountId = response.Model.Id,
-                            Creation = DateTime.Now
-                        }
-                    });
+                    // Crear perfil.
+                    var createProfile = await createService.Create(response.Model);
 
-                    if (res.Response != Responses.Success)
+                    if (createProfile.Response != Responses.Success)
                     {
                         return new ReadOneResponse<AuthModel<ProfileModel>>
                         {
                             Response = Responses.UnavailableService,
-                            Message = "Un error grave ocurri�"
+                            Message = createProfile.Message
                         };
                     }
 
-                    profile = res;
+                    profile = createProfile;
                     break;
                 }
 
@@ -152,7 +143,7 @@ public class ProfileController : ControllerBase
                 return new ReadOneResponse<AuthModel<ProfileModel>>
                 {
                     Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurri�"
+                    Message = "Un error grave ocurrió"
                 };
         }
 

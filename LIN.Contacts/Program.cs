@@ -1,4 +1,5 @@
 using Http.Extensions;
+using LIN.Contacts.Services.Authentication;
 
 // Crear constructor.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddSignalR();
 
 // Services.
 builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>(); 
+builder.Services.AddSingleton<ICreateProfileService, CreateProfileService>(); 
 
 // Crear app.
 var app = builder.Build();
