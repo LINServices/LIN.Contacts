@@ -1,10 +1,8 @@
 namespace LIN.Contacts.Controllers;
 
-
 [Route("[controller]")]
 public class DevicesController : ControllerBase
 {
-
 
     /// <summary>
     /// Obtener dispositivos.

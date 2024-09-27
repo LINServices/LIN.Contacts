@@ -1,10 +1,8 @@
 namespace LIN.Contacts.Controllers;
 
-
 [Route("[controller]")]
 public class ContactsController(ContactsHubActions hubContext) : ControllerBase
 {
-
 
     /// <summary>
     /// Crear contacto.
@@ -47,7 +45,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         return response;
 
     }
-
 
 
     /// <summary>
@@ -95,7 +92,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     }
 
 
-
     /// <summary>
     /// Obtener un contacto.
     /// </summary>
@@ -130,7 +126,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         };
 
     }
-
 
 
     /// <summary>
@@ -175,7 +170,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     }
 
 
-
     /// <summary>
     /// Actualizar el contacto.
     /// </summary>
@@ -217,7 +211,5 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         };
 
     }
-
-
 
 }

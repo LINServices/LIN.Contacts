@@ -2,11 +2,9 @@ using LIN.Contacts.Services.Authentication;
 
 namespace LIN.Contacts.Controllers;
 
-
 [Route("[controller]")]
 public class ProfileController(ICreateProfileService createService) : ControllerBase
 {
-
 
     /// <summary>
     /// Inicia una sesión de usuario.
@@ -95,7 +93,6 @@ public class ProfileController(ICreateProfileService createService) : Controller
     }
 
 
-
     /// <summary>
     /// Iniciar sesión con el token.
     /// </summary>
@@ -110,11 +107,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
         if (response.Response != Responses.Success)
             return new(response.Response);
 
-
-
-
         var profile = await Profiles.ReadByAccount(response.Model.Id);
-
 
         switch (profile.Response)
         {
@@ -147,15 +140,10 @@ public class ProfileController(ICreateProfileService createService) : Controller
                 };
         }
 
-
-
-
-
         var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
         {
             Response = Responses.Success,
             Message = "Success"
-
         };
 
         if (profile.Response == Responses.Success)
@@ -175,10 +163,8 @@ public class ProfileController(ICreateProfileService createService) : Controller
             }
         };
 
-
         return httpResponse;
 
     }
-
 
 }

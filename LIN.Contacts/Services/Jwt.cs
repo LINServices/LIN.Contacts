@@ -1,21 +1,17 @@
 ﻿using Http.Services;
-using LIN.Contacts.Services.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace LIN.Contacts.Services;
 
-
 public class Jwt
 {
-
 
     /// <summary>
     /// Llave del token
     /// </summary>
     private static string JwtKey { get; set; } = string.Empty;
-
 
 
     /// <summary>
@@ -25,8 +21,6 @@ public class Jwt
     {
         JwtKey = Configuration.GetConfiguration("LIN:Jwt");
     }
-
-
 
 
     /// <summary>
@@ -58,7 +52,6 @@ public class Jwt
         // Genera el token
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
 
 
     /// <summary>
@@ -119,6 +112,5 @@ public class Jwt
         return new();
 
     }
-
 
 }
