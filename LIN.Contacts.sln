@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Contacts", "..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj", "{F656533C-C2C5-44A2-A02B-82184C12D99A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Emma", "..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj", "{E3269817-2FC0-409C-B4C3-DFC8AB190049}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.OpenAssistant", "..\..\Tipos\LIN.Types.Cloud.OpenAssistant\LIN.Types.Cloud.OpenAssistant.csproj", "{97A34DA9-583F-4FFB-A458-313C6D37B015}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,14 +65,6 @@ Global
 		{F656533C-C2C5-44A2-A02B-82184C12D99A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F656533C-C2C5-44A2-A02B-82184C12D99A}.Release|x86.ActiveCfg = Release|Any CPU
 		{F656533C-C2C5-44A2-A02B-82184C12D99A}.Release|x86.Build.0 = Release|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Debug|x86.Build.0 = Debug|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|x86.ActiveCfg = Release|Any CPU
-		{E3269817-2FC0-409C-B4C3-DFC8AB190049}.Release|x86.Build.0 = Release|Any CPU
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -81,6 +73,14 @@ Global
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|x86.ActiveCfg = Release|Any CPU
 		{5B9AF4D9-5743-4CA9-A074-47D0F8989F75}.Release|x86.Build.0 = Release|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Debug|x86.Build.0 = Debug|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Release|x86.ActiveCfg = Release|Any CPU
+		{97A34DA9-583F-4FFB-A458-313C6D37B015}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

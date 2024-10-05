@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
@@ -18,8 +18,8 @@
         <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
         <ProjectReference Include="..\..\..\Tipos\Http\Http.csproj" />
         <ProjectReference Include="..\..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
+        <ProjectReference Include="..\..\..\Tipos\LIN.Types.Cloud.OpenAssistant\LIN.Types.Cloud.OpenAssistant.csproj" />
         <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
-        <ProjectReference Include="..\..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj" />
         <ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
     </ItemGroup>
 

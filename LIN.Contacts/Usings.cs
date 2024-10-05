@@ -15,7 +15,7 @@ global using Microsoft.EntityFrameworkCore;
 global using LIN.Types.Cloud.Identity.Abstracts;
 global using LIN.Types.Contacts.Models;
 global using LIN.Types.Responses;
-global using LIN.Types.Emma.Models;
+global using LIN.Types.Cloud.OpenAssistant.Api;
 global using LIN.Types.Contacts.Transient;
 
 // Http.

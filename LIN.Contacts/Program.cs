@@ -1,4 +1,5 @@
 using Http.Extensions;
+using LIN.Access.Auth;
 using LIN.Contacts.Services.Authentication;
 
 // Crear constructor.
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddLINHttp();
 
 builder.Services.AddSignalR();
+builder.Services.AddAuthenticationService();
 
 // Services.
 builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>(); 
@@ -37,7 +39,6 @@ catch (Exception)
 {
 }
 
-
 app.UseLINHttp();
 
 // Establecer string de conexión.
@@ -46,8 +47,6 @@ Jwt.Open();
 App.Open();
 
 app.MapHub<ContactsHub>("/realTime/contacts");
-
-LIN.Access.Auth.Build.Init();
 
 app.MapControllers();
 

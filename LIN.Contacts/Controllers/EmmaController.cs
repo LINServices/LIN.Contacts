@@ -12,7 +12,7 @@ public class EmmaController : ControllerBase
     /// <param name="tokenAuth">Token de identity.</param>
     /// <param name="consult">Consulta del usuario.</param>
     [HttpPost]
-    public async Task<HttpReadOneResponse<ResponseIAModel>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
+    public async Task<HttpReadOneResponse<AssistantResponse>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
     {
 
         // Cliente HTTP.
@@ -23,10 +23,10 @@ public class EmmaController : ControllerBase
         client.DefaultRequestHeaders.Add("useDefaultContext", true.ToString().ToLower());
 
         // Modelo de Emma.
-        var request = new LIN.Types.Models.EmmaRequest
+        var request = new AssistantRequest()
         {
-            AppContext = "contacts",
-            Asks = consult
+            App = "contacts",
+            Prompt = consult
         };
 
         // Generar el string content.
@@ -39,18 +39,10 @@ public class EmmaController : ControllerBase
         var response = await result.Content.ReadAsStringAsync();
 
         // Objeto.
-        dynamic? @object = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+        var assistantResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<ReadOneResponse<AssistantResponse>>(response);
 
         // Respuesta
-        return new ReadOneResponse<ResponseIAModel>()
-        {
-            Model = new()
-            {
-                IsSuccess = true,
-                Content = @object?.result
-            },
-            Response = Responses.Success
-        };
+        return assistantResponse ?? new(Responses.Undefined);
 
     }
 
