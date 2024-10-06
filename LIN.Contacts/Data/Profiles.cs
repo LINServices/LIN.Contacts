@@ -1,9 +1,7 @@
 ﻿namespace LIN.Contacts.Data;
 
-
 public partial class Profiles
 { 
-
 
     /// <summary>
     /// Crea un perfil.
@@ -23,7 +21,6 @@ public partial class Profiles
         return response;
 
     }
-
 
 
     /// <summary>
@@ -46,7 +43,6 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene un perfil por medio del Id de su cuenta.
     /// </summary>
@@ -67,7 +63,6 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene perfiles según los Id de las cuentas.
     /// </summary>
@@ -86,6 +81,5 @@ public partial class Profiles
         return response;
 
     }
-
 
 }

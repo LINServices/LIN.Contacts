@@ -3,6 +3,7 @@ using LIN.Contacts.Services.Authentication;
 namespace LIN.Contacts.Controllers;
 
 [Route("[controller]")]
+[RateLimit(requestLimit: 5, timeWindowSeconds: 60, blockDurationSeconds: 120)]
 public class ProfileController(ICreateProfileService createService) : ControllerBase
 {
 
@@ -98,7 +99,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
     /// </summary>
     /// <param name="token">Token</param>
     [HttpGet("login/token")]
-    public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> LoginToken([FromQuery] string token)
+    public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> LoginToken([FromHeader] string token)
     {
 
         // Login en LIN Server

@@ -1,9 +1,7 @@
 ﻿namespace LIN.Contacts.Data;
 
-
 public partial class Contacts
 {
-
 
     /// <summary>
     /// Crear nuevo contacto.
@@ -25,7 +23,6 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Obtener un contacto.
     /// </summary>
@@ -44,7 +41,6 @@ public partial class Contacts
         return response;
 
     }
-
 
 
     /// <summary>
@@ -68,7 +64,6 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Obtener los contactos asociados a un perfil.
     /// </summary>
@@ -87,7 +82,6 @@ public partial class Contacts
         return response;
 
     }
-
 
 
     /// <summary>
@@ -110,7 +104,6 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Actualizar un contacto.
     /// </summary>
@@ -129,6 +122,5 @@ public partial class Contacts
         return response;
 
     }
-
    
 }

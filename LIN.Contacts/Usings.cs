@@ -21,5 +21,4 @@ global using LIN.Types.Contacts.Transient;
 // Http.
 global using Http.ResponsesList;
 global using Global.Utilities;
-
-
+global using Http.Attributes;

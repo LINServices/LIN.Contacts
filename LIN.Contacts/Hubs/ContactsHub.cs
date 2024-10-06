@@ -2,16 +2,13 @@
 
 namespace LIN.Contacts.Hubs;
 
-
 public class ContactsHub : Hub
 {
-
 
     /// <summary>
     /// Lista de dispositivos.
     /// </summary>
     public static Dictionary<int, List<DeviceModel>> List { get; set; } = [];
-
 
 
     /// <summary>
@@ -65,7 +62,6 @@ public class ContactsHub : Hub
     }
 
 
-
     /// <summary>
     /// Enviar un comando a los demás dispositivos.
     /// </summary>
@@ -89,7 +85,11 @@ public class ContactsHub : Hub
     }
 
 
-
+    /// <summary>
+    /// Enviar comando a dispositivo.
+    /// </summary>
+    /// <param name="device">Id del dispositivo.</param>
+    /// <param name="command">Comando.</param>
     public async Task SendToDevice(string device, CommandModel command)
     {
 
@@ -97,9 +97,6 @@ public class ContactsHub : Hub
         await Clients.Client(device).SendAsync("#command", command);
 
     }
-
-
-
 
 
     /// <summary>
@@ -124,6 +121,5 @@ public class ContactsHub : Hub
         {
         }
     }
-
 
 }

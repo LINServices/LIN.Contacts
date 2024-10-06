@@ -1,10 +1,8 @@
 namespace LIN.Contacts.Controllers;
 
-
 [Route("[controller]")]
 public class EmmaController : ControllerBase
 {
-
 
     /// <summary>
     /// Respuesta de Emma al usuario.

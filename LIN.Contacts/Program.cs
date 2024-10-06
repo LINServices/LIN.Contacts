@@ -14,7 +14,6 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(sqlConnection);
 });
 
-
 // Controladores.
 builder.Services.AddLINHttp();
 

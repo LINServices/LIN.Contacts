@@ -1,6 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 [Route("[controller]")]
+[RateLimit(requestLimit: 10, timeWindowSeconds: 60, blockDurationSeconds: 100)]
 public class ContactsController(ContactsHubActions hubContext) : ControllerBase
 {
 

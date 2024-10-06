@@ -1,12 +1,10 @@
 ﻿namespace LIN.Contacts.Data;
 
-
 /// <summary>
 /// Nuevo contexto a la base de datos
 /// </summary>
 public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
-
 
     /// <summary>
     /// Tabla de perfiles.
@@ -32,7 +30,6 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
     public DbSet<PhoneModel> Phones { get; set; }
 
 
-
     /// <summary>
     /// Naming DB
     /// </summary>
@@ -43,7 +40,6 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
         modelBuilder.Entity<ProfileModel>()
            .HasIndex(e => e.AccountId)
            .IsUnique();
-
 
         modelBuilder.Entity<MailModel>()
              .HasOne(m => m.Contact)
@@ -58,6 +54,5 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
                .OnDelete(DeleteBehavior.Cascade);
 
     }
-
 
 }

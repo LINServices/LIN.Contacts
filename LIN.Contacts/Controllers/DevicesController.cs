@@ -1,6 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 [Route("[controller]")]
+[RateLimit(requestLimit: 5, timeWindowSeconds: 10, blockDurationSeconds: 120)]
 public class DevicesController : ControllerBase
 {
 

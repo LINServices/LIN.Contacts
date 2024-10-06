@@ -2,10 +2,8 @@
 
 namespace LIN.Contacts.Hubs;
 
-
 public sealed class ContactsHubActions(IHubContext<ContactsHub> hubContext)
 {
-
 
     /// <summary>
     /// Enviar comando.
@@ -21,6 +19,5 @@ public sealed class ContactsHubActions(IHubContext<ContactsHub> hubContext)
             Command = command
         });
     }
-
 
 }
