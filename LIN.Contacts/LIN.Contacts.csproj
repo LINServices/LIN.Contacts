@@ -8,18 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="LIN.Types.Cloud.Identity" Version="1.0.0" />
+        <PackageReference Include="Http.Utils" Version="1.0.0" />
+        <PackageReference Include="LIN.Access.Auth" Version="1.1.0" />
         <PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.0.0" />
-        <PackageReference Include="LIN.Types.Contacts" Version="1.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+        <PackageReference Include="LIN.Types.Contacts" Version="1.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
-        <ProjectReference Include="..\..\..\Tipos\Http\Http.csproj" />
-    </ItemGroup>
-
 </Project>

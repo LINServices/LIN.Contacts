@@ -13,7 +13,7 @@ public class MemorySession
     /// <summary>
     /// Lista de nombres de los chats.
     /// </summary>
-    public List<ContactModel> Contactos { get; set; }
+    public IEnumerable<ContactModel> Contactos { get; set; }
 
 
 
