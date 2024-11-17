@@ -54,9 +54,7 @@ public sealed class Conexión
                     OnUse = true;
                     return false;
                 }
-
                 return true;
-
             }
 
         }

@@ -45,7 +45,6 @@ public class EmmaController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Solicitud del servidor de Emma.
     /// </summary>
@@ -131,6 +130,5 @@ public class EmmaController : ControllerBase
         };
 
     }
-
 
 }

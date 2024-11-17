@@ -1,4 +1,5 @@
 using LIN.Contacts.Services.Authentication;
+using LIN.Types.Cloud.Identity.Models;
 
 namespace LIN.Contacts.Controllers;
 
@@ -8,25 +9,47 @@ public class ProfileController(ICreateProfileService createService) : Controller
 {
 
     /// <summary>
-    /// Inicia una sesión de usuario.
+    /// Iniciar sesion.
     /// </summary>
-    /// <param name="user">Usuario único</param>
-    /// <param name="password">Contraseña del usuario</param>
+    /// <param name="user">Usuario.</param>
+    /// <param name="password">Contraseña.</param>
     [HttpGet("login")]
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Validar entradas.
+        // Validar parametros.
         if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
             return new(Responses.InvalidParam)
             {
                 Message = "Usuario / contraseña no pueden estar vacíos"
             };
 
-        // Respuesta de autenticación.
+        // Autenticar.
         var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
+        return await HandleAuthenticationResponse(authResponse);
+    }
 
-        // Autenticación errónea.
+
+    /// <summary>
+    /// Iniciar sesion con token.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    [HttpGet("login/token")]
+    public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> LoginToken([FromHeader] string token)
+    {
+        var authResponse = await Access.Auth.Controllers.Authentication.Login(token);
+        return await HandleAuthenticationResponse(authResponse);
+    }
+
+
+    /// <summary>
+    /// Manejar la respuesta de autenticación.
+    /// </summary>
+    /// <param name="authResponse">Respuesta.</param>
+    private async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> HandleAuthenticationResponse(ReadOneResponse<AccountModel> authResponse)
+    {
+
+        // Falla la autenticación.
         if (authResponse.Response != Responses.Success)
             return new ReadOneResponse<AuthModel<ProfileModel>>
             {
@@ -34,138 +57,51 @@ public class ProfileController(ICreateProfileService createService) : Controller
                 Response = authResponse.Response
             };
 
-        // Obtiene el perfil
+        // Leer la cuenta.
         var profile = await Profiles.ReadByAccount(authResponse.Model.Id);
 
-        switch (profile.Response)
+        // Si no existe el perfil, crearlo.
+        if (profile.Response == Responses.NotExistProfile)
         {
-            case Responses.Success:
-                break;
-
-            case Responses.NotExistProfile:
-                {
-
-                    // Crear perfil.
-                    var response = await createService.Create(authResponse.Model);
-
-                    if (response.Response != Responses.Success)
-                    {
-                        return new ReadOneResponse<AuthModel<ProfileModel>>
-                        {
-                            Response = Responses.UnavailableService,
-                            Message = response.Message
-                        };
-                    }
-
-                    profile = response;
-                    break;
-                }
-
-            default:
+            var createProfileResponse = await createService.Create(authResponse.Model);
+            if (createProfileResponse.Response != Responses.Success)
+            {
                 return new ReadOneResponse<AuthModel<ProfileModel>>
                 {
                     Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurrió"
+                    Message = createProfileResponse.Message
                 };
+            }
+            profile = createProfileResponse;
         }
 
+        // Error grave.
+        if (profile.Response != Responses.Success)
+        {
+            return new ReadOneResponse<AuthModel<ProfileModel>>
+            {
+                Response = Responses.UnavailableService,
+                Message = "Un error grave ocurrió"
+            };
+        }
 
-        // Genera el token
+        // Generar token.
         var token = Jwt.Generate(profile.Model);
-
         return new ReadOneResponse<AuthModel<ProfileModel>>
         {
             Response = Responses.Success,
             Message = "Success",
-            Model = new()
+            Model = new AuthModel<ProfileModel>
             {
                 Account = authResponse.Model,
-                TokenCollection = new()
+                TokenCollection = new Dictionary<string, string>
                 {
-                    {
-                        "identity", authResponse.Token
-                    }
+                    { "identity", authResponse.Token }
                 },
                 Profile = profile.Model
             },
             Token = token
         };
-
-    }
-
-
-    /// <summary>
-    /// Iniciar sesión con el token.
-    /// </summary>
-    /// <param name="token">Token</param>
-    [HttpGet("login/token")]
-    public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> LoginToken([FromHeader] string token)
-    {
-
-        // Login en LIN Server
-        var response = await Access.Auth.Controllers.Authentication.Login(token);
-
-        if (response.Response != Responses.Success)
-            return new(response.Response);
-
-        var profile = await Profiles.ReadByAccount(response.Model.Id);
-
-        switch (profile.Response)
-        {
-            case Responses.Success:
-                break;
-
-            case Responses.NotExistProfile:
-                {
-                    // Crear perfil.
-                    var createProfile = await createService.Create(response.Model);
-
-                    if (createProfile.Response != Responses.Success)
-                    {
-                        return new ReadOneResponse<AuthModel<ProfileModel>>
-                        {
-                            Response = Responses.UnavailableService,
-                            Message = createProfile.Message
-                        };
-                    }
-
-                    profile = createProfile;
-                    break;
-                }
-
-            default:
-                return new ReadOneResponse<AuthModel<ProfileModel>>
-                {
-                    Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurrió"
-                };
-        }
-
-        var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
-        {
-            Response = Responses.Success,
-            Message = "Success"
-        };
-
-        if (profile.Response == Responses.Success)
-        {
-            // Genera el token
-            var tokenAcceso = Jwt.Generate(profile.Model);
-
-            httpResponse.Token = tokenAcceso;
-            httpResponse.Model.Profile = profile.Model;
-        }
-
-        httpResponse.Model.Account = response.Model;
-        httpResponse.Model.TokenCollection = new()
-        {
-            {
-                "identity", response.Token
-            }
-        };
-
-        return httpResponse;
-
     }
 
 }

@@ -21,8 +21,8 @@ builder.Services.AddSignalR();
 builder.Services.AddAuthenticationService();
 
 // Services.
-builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>(); 
-builder.Services.AddSingleton<ICreateProfileService, CreateProfileService>(); 
+builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>();
+builder.Services.AddSingleton<ICreateProfileService, CreateProfileService>();
 
 // Crear app.
 var app = builder.Build();

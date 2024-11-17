@@ -1,6 +1,5 @@
 ﻿namespace LIN.Contacts.Memory;
 
-
 public class Mems
 {
 

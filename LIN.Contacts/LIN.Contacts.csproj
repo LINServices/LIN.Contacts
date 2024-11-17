@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Http.Utils" Version="2.0.5" />
-        <PackageReference Include="LIN.Access.Auth" Version="1.3.4" />
+        <PackageReference Include="Http.Utils" Version="2.8.0.2" />
+        <PackageReference Include="LIN.Access.Auth" Version="1.4.0" />
         <PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.4.0" />
         <PackageReference Include="LIN.Types.Contacts" Version="1.2.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>

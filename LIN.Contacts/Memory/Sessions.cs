@@ -1,6 +1,5 @@
 ﻿namespace LIN.Contacts.Memory;
 
-
 public class Sessions : Dictionary<int, MemorySession>
 {
 
@@ -18,8 +17,6 @@ public class Sessions : Dictionary<int, MemorySession>
     }
 
 
-
-
     /// <summary>
     /// Agrega una nueva sesión
     /// </summary>
@@ -28,6 +25,5 @@ public class Sessions : Dictionary<int, MemorySession>
     {
         Add(session.Profile.Id, session);
     }
-
 
 }
