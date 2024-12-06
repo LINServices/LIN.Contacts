@@ -9,7 +9,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
 {
 
     /// <summary>
-    /// Iniciar sesion.
+    /// Iniciar sesión.
     /// </summary>
     /// <param name="user">Usuario.</param>
     /// <param name="password">Contraseña.</param>
@@ -31,7 +31,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
 
 
     /// <summary>
-    /// Iniciar sesion con token.
+    /// Iniciar sesión con token.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("login/token")]
