@@ -82,7 +82,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
             profileOnMemory.Contactos = all.Models;
         }
 
-
         // Respuesta.
         return new ReadAllResponse<ContactModel>()
         {
@@ -183,7 +182,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
 
         // Información del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
-
 
         // Validar IAM.
         var authorization = await Data.Contacts.Iam(updateModel.Id, tokenInfo.ProfileId);

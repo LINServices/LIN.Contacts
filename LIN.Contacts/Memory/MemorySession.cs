@@ -1,6 +1,5 @@
 ﻿namespace LIN.Contacts.Memory;
 
-
 public class MemorySession
 {
 
@@ -9,14 +8,10 @@ public class MemorySession
     /// </summary>
     public ProfileModel Profile { get; set; }
 
-
     /// <summary>
     /// Lista de nombres de los chats.
     /// </summary>
     public IEnumerable<ContactModel> Contactos { get; set; }
-
-
-
 
     /// <summary>
     /// Nueva session en memoria.
@@ -26,7 +21,6 @@ public class MemorySession
         Profile = new();
         Contactos = [];
     }
-
 
     /// <summary>
     /// Obtiene un string con la concatenación de los nombres de las conversaciones.

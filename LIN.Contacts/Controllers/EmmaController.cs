@@ -56,26 +56,25 @@ public class EmmaController : ControllerBase
         // Validar token.
         var response = await LIN.Access.Auth.Controllers.Authentication.Login(tokenAuth);
 
-
+        // Si no esta autorizado.
         if (response.Response != Responses.Success)
-        {
             return new ReadOneResponse<object>()
             {
                 Model = "Este usuario no autenticado en LIN Contactos."
             };
-        }
+        
+
 
         // 
         var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
 
 
         if (profile.Response != Responses.Success)
-        {
             return new ReadOneResponse<object>()
             {
                 Model = "Este usuario no tiene una cuenta en LIN Contactos."
             };
-        }
+        
 
 
         var getProf = Mems.Sessions[profile.Model.Id];
