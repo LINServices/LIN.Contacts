@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>false</InvariantGlobalization>
@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Http.Utils" Version="3.0.0" />
-        <PackageReference Include="LIN.Access.Auth" Version="1.6.0" />
+        <PackageReference Include="LIN.Access.Auth" Version="1.7.0" />
         <PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.4.0" />
         <PackageReference Include="LIN.Types.Contacts" Version="1.3.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
