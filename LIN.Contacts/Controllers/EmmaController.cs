@@ -100,9 +100,9 @@ public class EmmaController : ControllerBase
                         Estos son comandos:
                         
                         {
-                          "name": "#say",
+                          "name": "say",
                           "description": "Utiliza esta función para decirle algo al usuario como saludos o responder a preguntas.",
-                          "example":"#say('Hola')",
+                          "example":"say('Hola')",
                           "parameters": {
                             "properties": {
                               "content": {

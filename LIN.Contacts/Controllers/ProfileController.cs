@@ -17,7 +17,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Validar parametros.
+        // Validar parámetros.
         if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
             return new(Responses.InvalidParam)
             {

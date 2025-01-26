@@ -35,7 +35,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         // Crear el contacto
         var response = await Data.Contacts.Create(model);
 
-
         // Si fue correcto.
         if (response.Response == Responses.Success)
         {

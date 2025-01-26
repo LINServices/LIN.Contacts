@@ -129,7 +129,6 @@ public sealed class Conexión
         {
             OnUse = true;
         }
-
     }
 
 
