@@ -18,7 +18,7 @@ builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddLINHttp();
 
 builder.Services.AddSignalR();
-builder.Services.AddAuthenticationService();
+builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:app"]);
 
 // Services.
 builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>();
