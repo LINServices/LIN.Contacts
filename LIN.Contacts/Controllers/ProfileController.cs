@@ -25,7 +25,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
             };
 
         // Autenticar.
-        var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
+        var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password);
         return await HandleAuthenticationResponse(authResponse);
     }
 

@@ -43,7 +43,6 @@ app.UseLINHttp();
 // Establecer string de conexión.
 Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
-App.Open();
 
 app.MapHub<ContactsHub>("/realTime/contacts");
 
