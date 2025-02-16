@@ -1,11 +1,12 @@
 using LIN.Contacts.Services.Authentication;
+using LIN.Types.Cloud.Identity.Abstracts;
 using LIN.Types.Cloud.Identity.Models;
 
 namespace LIN.Contacts.Controllers;
 
 [Route("[controller]")]
 [RateLimit(requestLimit: 5, timeWindowSeconds: 60, blockDurationSeconds: 120)]
-public class ProfileController(ICreateProfileService createService) : ControllerBase
+public class ProfileController(ICreateProfileService createService, Persistence.Data.Profiles profiles) : ControllerBase
 {
 
     /// <summary>
@@ -58,7 +59,7 @@ public class ProfileController(ICreateProfileService createService) : Controller
             };
 
         // Leer la cuenta.
-        var profile = await Profiles.ReadByAccount(authResponse.Model.Id);
+        var profile = await profiles.ReadByAccount(authResponse.Model.Id);
 
         // Si no existe el perfil, crearlo.
         if (profile.Response == Responses.NotExistProfile)

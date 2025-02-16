@@ -2,7 +2,7 @@
 
 namespace LIN.Contacts.Services.Authentication;
 
-public class CreateProfileService : ICreateProfileService
+public class CreateProfileService(Persistence.Data.Profiles profiles) : ICreateProfileService
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class CreateProfileService : ICreateProfileService
     {
 
         // Crear en la BD.
-        var createResponse = await Profiles.Create(new()
+        var createResponse = await profiles.Create(new()
         {
             Account = account,
             Profile = new()

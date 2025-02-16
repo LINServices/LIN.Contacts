@@ -1,9 +1,12 @@
-﻿namespace LIN.Contacts.Data;
+﻿using LIN.Types.Contacts.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace LIN.Contacts.Persistence.Context;
 
 /// <summary>
 /// Nuevo contexto a la base de datos
 /// </summary>
-public class Context(DbContextOptions<Context> options) : DbContext(options)
+public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
 
     /// <summary>
@@ -53,6 +56,10 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
                .HasForeignKey(m => m.ContactId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<ProfileModel>().ToTable("Profile");
+        modelBuilder.Entity<MailModel>().ToTable("Mail");
+        modelBuilder.Entity<PhoneModel>().ToTable("Phone");
+        modelBuilder.Entity<ContactModel>().ToTable("Contact");
     }
 
 }

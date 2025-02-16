@@ -1,7 +1,9 @@
+using LIN.Types.Cloud.OpenAssistant.Api;
+
 namespace LIN.Contacts.Controllers;
 
 [Route("[controller]")]
-public class EmmaController : ControllerBase
+public class EmmaController(Persistence.Data.Profiles profiles, Persistence.Data.Contacts contacts) : ControllerBase
 {
 
     /// <summary>
@@ -62,11 +64,11 @@ public class EmmaController : ControllerBase
             {
                 Model = "Este usuario no autenticado en LIN Contactos."
             };
-        
+
 
 
         // 
-        var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
+        var profile = await profiles.ReadByAccount(response.Model.Id);
 
 
         if (profile.Response != Responses.Success)
@@ -74,7 +76,7 @@ public class EmmaController : ControllerBase
             {
                 Model = "Este usuario no tiene una cuenta en LIN Contactos."
             };
-        
+
 
 
         var getProf = Mems.Sessions[profile.Model.Id];
@@ -85,7 +87,7 @@ public class EmmaController : ControllerBase
             getProf = new MemorySession()
             {
                 Profile = profile.Model,
-                Contactos = (await Data.Contacts.ReadAll(profile.Model.Id)).Models,
+                Contactos = (await contacts.ReadAll(profile.Model.Id)).Models,
             };
             Mems.Sessions.Add(getProf);
         }

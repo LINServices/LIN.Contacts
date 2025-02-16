@@ -1,6 +1,10 @@
-﻿namespace LIN.Contacts.Data;
+﻿using LIN.Types.Contacts.Models;
+using LIN.Types.Responses;
+using Microsoft.EntityFrameworkCore;
 
-public partial class Contacts
+namespace LIN.Contacts.Persistence.Data;
+
+public partial class Contacts(Context.DataContext context)
 {
 
     /// <summary>
@@ -8,17 +12,17 @@ public partial class Contacts
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto.</param>
-    public static async Task<CreateResponse> Create(ContactModel data, Conexión context)
+    public async Task<CreateResponse> Create(ContactModel data)
     {
         // Ejecución
         try
         {
 
             // El usuario ya existe.
-            context.DataBase.Attach(data.Im);
+            context.Attach(data.Im);
 
-            var res = context.DataBase.Contacts.Add(data);
-            await context.DataBase.SaveChangesAsync();
+            var res = context.Contacts.Add(data);
+            await context.SaveChangesAsync();
             return new(Responses.Success, data.Id);
         }
         catch
@@ -33,14 +37,14 @@ public partial class Contacts
     /// </summary>
     /// <param name="id">Id del contacto</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<ContactModel>> Read(int id, Conexión context)
+    public async Task<ReadOneResponse<ContactModel>> Read(int id)
     {
 
         // Ejecución
         try
         {
 
-            var profile = await (from P in context.DataBase.Contacts
+            var profile = await (from P in context.Contacts
                                  where P.Id == id
                                  select new ContactModel
                                  {
@@ -62,21 +66,18 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Acceso IAM en un contacto.
     /// </summary>
     /// <param name="contact">Id del contacto.</param>
     /// <param name="profile">Id del perfil.</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<bool>> Iam(int contact, int profile, Conexión context)
+    public async Task<ReadOneResponse<bool>> Iam(int contact, int profile)
     {
-
         // Ejecución
         try
         {
 
-            var have = await (from P in context.DataBase.Contacts
+            var have = await (from P in context.Contacts
                               where P.Id == contact
                               && P.Im.Id == profile
                               select P.Id
@@ -95,22 +96,17 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
     /// <param name="id">Id del perfil.</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadAllResponse<ContactModel>> ReadAll(int id, Conexión context)
+    public async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
     {
-
-
         // Ejecución
         try
         {
-
             // Query de contactos
-            var contacts = await (from contact in context.DataBase.Contacts
+            var contacts = await (from contact in context.Contacts
                                   where contact.Im.Id == id
                                   orderby contact.Nombre
                                   select new ContactModel
@@ -133,21 +129,19 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Eliminar un contacto.
     /// </summary>
     /// <param name="id">Id del contacto.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ResponseBase> Delete(int id, Conexión context)
+    public async Task<ResponseBase> Delete(int id)
     {
-
         // Ejecución
         try
         {
 
             // Eliminar.
-            await context.DataBase.Contacts.Where(t => t.Id == id).ExecuteDeleteAsync();
+            await context.Contacts.Where(t => t.Id == id).ExecuteDeleteAsync();
 
             return new(Responses.Success);
         }
@@ -158,14 +152,13 @@ public partial class Contacts
     }
 
 
-
     /// <summary>
     /// Actualizar un contacto.
     /// </summary>
     /// <param name="id">Id del contacto.</param>
     /// <param name="contactModel">Modelo del contacto.</param>
     /// <param name="context">Contexto.</param>
-    public static async Task<ResponseBase> Update(ContactModel contactModel, Conexión context)
+    public async Task<ResponseBase> Update(ContactModel contactModel)
     {
 
         // Ejecución
@@ -173,7 +166,7 @@ public partial class Contacts
         {
 
             // Eliminar.
-            await context.DataBase.Contacts.Where(t => t.Id == contactModel.Id).ExecuteUpdateAsync(
+            await context.Contacts.Where(t => t.Id == contactModel.Id).ExecuteUpdateAsync(
                 setters =>
                     setters.SetProperty(contact => contact.Picture, b => contactModel.Picture ?? b.Picture).
                             SetProperty(contact => contact.Nombre, b => contactModel.Nombre ?? b.Nombre).
@@ -184,7 +177,7 @@ public partial class Contacts
             // Actualizar números.
             foreach (var phone in contactModel.Phones)
             {
-                await context.DataBase.Phones.Where(t => t.Id == phone.Id).ExecuteUpdateAsync(
+                await context.Phones.Where(t => t.Id == phone.Id).ExecuteUpdateAsync(
                 setters =>
                     setters.SetProperty(contact => contact.Number, b => phone.Number ?? b.Number)
                 );
@@ -194,7 +187,7 @@ public partial class Contacts
             // Actualizar correos.
             foreach (var mails in contactModel.Mails)
             {
-                await context.DataBase.Mails.Where(t => t.Id == mails.Id).ExecuteUpdateAsync(
+                await context.Mails.Where(t => t.Id == mails.Id).ExecuteUpdateAsync(
                 setters =>
                     setters.SetProperty(contact => contact.Email, b => mails.Email ?? b.Email)
                 );
@@ -207,6 +200,5 @@ public partial class Contacts
         }
         return new();
     }
-
 
 }

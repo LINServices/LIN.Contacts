@@ -1,16 +1,19 @@
-﻿namespace LIN.Contacts.Data;
+﻿using LIN.Types.Cloud.Identity.Abstracts;
+using LIN.Types.Contacts.Models;
+using LIN.Types.Responses;
+using Microsoft.EntityFrameworkCore;
 
+namespace LIN.Contacts.Persistence.Data;
 
-public partial class Profiles
+public partial class Profiles(Context.DataContext context)
 {
-
 
     /// <summary>
     /// Crea un perfil.
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data, Conexión context)
+    public async Task<ReadOneResponse<ProfileModel>> Create(AuthModel<ProfileModel> data)
     {
         // Id
         data.Profile.Id = 0;
@@ -18,8 +21,8 @@ public partial class Profiles
         // Ejecución
         try
         {
-            var res = context.DataBase.Profiles.Add(data.Profile);
-            await context.DataBase.SaveChangesAsync();
+            var res = context.Profiles.Add(data.Profile);
+            await context.SaveChangesAsync();
             return new(Responses.Success, data.Profile);
         }
         catch
@@ -29,21 +32,18 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene un perfil
     /// </summary>
     /// <param name="id">Id del perfil</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<ProfileModel>> Read(int id, Conexión context)
+    public async Task<ReadOneResponse<ProfileModel>> Read(int id)
     {
-
-
         // Ejecución
         try
         {
 
-            var profile = await (from P in context.DataBase.Profiles
+            var profile = await (from P in context.Profiles
                                  where P.Id == id
                                  select P).FirstOrDefaultAsync();
 
@@ -56,20 +56,19 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene un perfil por medio del Id de su cuenta.
     /// </summary>
     /// <param name="id">Id de la cuenta</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id, Conexión context)
+    public async Task<ReadOneResponse<ProfileModel>> ReadByAccount(int id)
     {
 
         // Ejecución
         try
         {
             // Consulta.
-            var profile = await (from P in context.DataBase.Profiles
+            var profile = await (from P in context.Profiles
                                  where P.AccountId == id
                                  select P).FirstOrDefaultAsync();
 
@@ -86,13 +85,12 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene perfiles según los Id de las cuentas.
     /// </summary>
     /// <param name="ids">Lista de Ids.</param>
     /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids, Conexión context)
+    public async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids)
     {
 
 
@@ -100,7 +98,7 @@ public partial class Profiles
         try
         {
 
-            var profile = await (from P in context.DataBase.Profiles
+            var profile = await (from P in context.Profiles
                                  where ids.Contains(P.AccountId)
                                  select P).ToListAsync();
 
@@ -114,6 +112,5 @@ public partial class Profiles
         }
         return new();
     }
-
 
 }

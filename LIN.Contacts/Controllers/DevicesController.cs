@@ -1,5 +1,6 @@
 namespace LIN.Contacts.Controllers;
 
+[LocalToken]
 [Route("[controller]")]
 [RateLimit(requestLimit: 5, timeWindowSeconds: 10, blockDurationSeconds: 120)]
 public class DevicesController : ControllerBase
@@ -10,7 +11,6 @@ public class DevicesController : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet]
-    [LocalToken]
     public HttpReadAllResponse<DeviceModel> Devices([FromHeader] string token)
     {
 

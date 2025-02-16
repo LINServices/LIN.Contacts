@@ -1,8 +1,9 @@
 namespace LIN.Contacts.Controllers;
 
+[LocalToken]
 [Route("[controller]")]
 [RateLimit(requestLimit: 10, timeWindowSeconds: 60, blockDurationSeconds: 100)]
-public class ContactsController(ContactsHubActions hubContext) : ControllerBase
+public class ContactsController(ContactsHubActions hubContext, Persistence.Data.Contacts contacts) : ControllerBase
 {
 
     /// <summary>
@@ -11,7 +12,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
     [HttpPost]
-    [LocalToken]
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] ContactModel model)
     {
 
@@ -33,7 +33,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         };
 
         // Crear el contacto
-        var response = await Data.Contacts.Create(model);
+        var response = await contacts.Create(model);
 
         // Si fue correcto.
         if (response.Response == Responses.Success)
@@ -52,7 +52,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
-    [LocalToken]
     public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token)
     {
 
@@ -60,7 +59,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Obtiene los contactos
-        var all = await Data.Contacts.ReadAll(tokenInfo.ProfileId);
+        var all = await contacts.ReadAll(tokenInfo.ProfileId);
 
         // Registra en el memory
         var profileOnMemory = Mems.Sessions[tokenInfo.ProfileId];
@@ -97,7 +96,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     /// <param name="id">Id del contacto.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpGet]
-    [LocalToken]
     public async Task<HttpReadOneResponse<ContactModel>> Read([FromQuery] int id, [FromHeader] string token)
     {
 
@@ -105,7 +103,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
-        var authorization = await Data.Contacts.Iam(id, tokenInfo.ProfileId);
+        var authorization = await contacts.Iam(id, tokenInfo.ProfileId);
 
         if (authorization.Response != Responses.Success)
             return new ReadOneResponse<ContactModel>()
@@ -115,7 +113,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
             };
 
         // Obtiene los contactos
-        var model = await Data.Contacts.Read(id);
+        var model = await contacts.Read(id);
 
         // Respuesta.
         return new ReadOneResponse<ContactModel>()
@@ -133,7 +131,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     /// <param name="id">Id del contacto.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpDelete]
-    [LocalToken]
     public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
     {
 
@@ -141,7 +138,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
-        var authorization = await Data.Contacts.Iam(id, tokenInfo.ProfileId);
+        var authorization = await contacts.Iam(id, tokenInfo.ProfileId);
 
         if (authorization.Response != Responses.Success)
             return new ReadOneResponse<ContactModel>()
@@ -151,7 +148,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
             };
 
         // Obtiene los contactos.
-        var result = await Data.Contacts.Delete(id);
+        var result = await contacts.Delete(id);
 
         // Si fue correcto.
         if (result.Response == Responses.Success)
@@ -175,7 +172,6 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
     /// <param name="updateModel">Modelo</param>
     /// <param name="token">Token.</param>
     [HttpPatch]
-    [LocalToken]
     public async Task<HttpResponseBase> Update([FromBody] ContactModel updateModel, [FromHeader] string token)
     {
 
@@ -183,7 +179,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
-        var authorization = await Data.Contacts.Iam(updateModel.Id, tokenInfo.ProfileId);
+        var authorization = await contacts.Iam(updateModel.Id, tokenInfo.ProfileId);
 
         if (authorization.Response != Responses.Success)
             return new ReadOneResponse<ContactModel>()
@@ -193,7 +189,7 @@ public class ContactsController(ContactsHubActions hubContext) : ControllerBase
             };
 
         // Obtiene los contactos
-        var res = await Data.Contacts.Update(updateModel);
+        var res = await contacts.Update(updateModel);
 
         // Si fue correcto.
         if (res.Response == Responses.Success)

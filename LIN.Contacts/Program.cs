@@ -1,18 +1,10 @@
 using Http.Extensions;
 using LIN.Access.Auth;
+using LIN.Contacts.Persistence.Extensions;
 using LIN.Contacts.Services.Authentication;
 
 // Crear constructor.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-// Obtiene el string de conexión SQL.
-var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
-
-// Servicio de BD
-builder.Services.AddDbContext<Context>(options =>
-{
-    options.UseSqlServer(sqlConnection);
-});
 
 // Controladores.
 builder.Services.AddLINHttp();
@@ -21,27 +13,17 @@ builder.Services.AddSignalR();
 builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:app"]);
 
 // Services.
+builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>();
-builder.Services.AddSingleton<ICreateProfileService, CreateProfileService>();
+builder.Services.AddScoped<ICreateProfileService, CreateProfileService>();
 
 // Crear app.
 var app = builder.Build();
 
-try
-{
-    // Si la base de datos no existe.
-    using var scope = app.Services.CreateScope();
-    var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
-    var res = dataContext.Database.EnsureCreated();
-}
-catch (Exception)
-{
-}
-
 app.UseLINHttp();
+app.UsePersistence();
 
 // Establecer string de conexión.
-Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 
 app.MapHub<ContactsHub>("/realTime/contacts");
