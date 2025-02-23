@@ -19,7 +19,7 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar
-        if (model.Nombre.Trim().Length <= 0)
+        if (string.IsNullOrWhiteSpace(model.Name))
             return new CreateResponse()
             {
                 Message = "Parámetros inválidos",
@@ -39,7 +39,7 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
         if (response.Response == Responses.Success)
         {
             // Enviar comando.
-            await hubContext.SendCommand(tokenInfo.ProfileId, $"addContact({response.LastID})");
+            await hubContext.SendCommand(tokenInfo.ProfileId, $"addContact({response.LastId})");
         }
 
         return response;

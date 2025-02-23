@@ -52,7 +52,7 @@ public partial class Contacts(Context.DataContext context)
                                      Birthday = P.Birthday,
                                      Id = P.Id,
                                      Mails = P.Mails,
-                                     Nombre = P.Nombre,
+                                     Name = P.Name,
                                      Type = P.Type,
                                      Phones = P.Phones
                                  }).FirstOrDefaultAsync();
@@ -108,14 +108,14 @@ public partial class Contacts(Context.DataContext context)
             // Query de contactos
             var contacts = await (from contact in context.Contacts
                                   where contact.Im.Id == id
-                                  orderby contact.Nombre
+                                  orderby contact.Name
                                   select new ContactModel
                                   {
                                       Picture = contact.Picture,
                                       Birthday = contact.Birthday,
                                       Id = contact.Id,
                                       Mails = contact.Mails,
-                                      Nombre = contact.Nombre,
+                                      Name = contact.Name,
                                       Type = contact.Type,
                                       Phones = contact.Phones
                                   }).ToListAsync();
@@ -169,7 +169,7 @@ public partial class Contacts(Context.DataContext context)
             await context.Contacts.Where(t => t.Id == contactModel.Id).ExecuteUpdateAsync(
                 setters =>
                     setters.SetProperty(contact => contact.Picture, b => contactModel.Picture ?? b.Picture).
-                            SetProperty(contact => contact.Nombre, b => contactModel.Nombre ?? b.Nombre).
+                            SetProperty(contact => contact.Name, b => contactModel.Name ?? b.Name).
                             SetProperty(contact => contact.Type, contactModel.Type)
                 );
 

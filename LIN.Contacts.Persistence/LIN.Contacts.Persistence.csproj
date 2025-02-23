@@ -7,9 +7,9 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="LIN.Access.Auth" Version="1.7.1" />
+		<PackageReference Include="LIN.Access.Auth" Version="1.8.0" />
 		<PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.5.0" />
-		<PackageReference Include="LIN.Types.Contacts" Version="1.4.0" />
+		<PackageReference Include="LIN.Types.Contacts" Version="1.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
