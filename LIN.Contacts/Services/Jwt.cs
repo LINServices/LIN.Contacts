@@ -1,5 +1,4 @@
-﻿using Http.Services;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -17,9 +16,9 @@ public class Jwt
     /// <summary>
     /// Inicia el servicio Jwt
     /// </summary>
-    public static void Open()
+    public static void Open(IConfigurationManager configuration)
     {
-        JwtKey = Configuration.GetConfiguration("LIN:Jwt");
+        JwtKey = configuration["LIN:Jwt"];
     }
 
 

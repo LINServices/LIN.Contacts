@@ -24,7 +24,7 @@ app.UseLINHttp();
 app.UsePersistence();
 
 // Establecer string de conexión.
-Jwt.Open();
+Jwt.Open(builder.Configuration);
 
 app.MapHub<ContactsHub>("/realTime/contacts");
 
