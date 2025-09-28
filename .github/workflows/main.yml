@@ -45,7 +45,6 @@ jobs:
             --self-contained false \
             -p:PublishSingleFile=false \
             -p:GenerateRuntimeConfigurationFiles=true \
-            --no-build \
             --output "$PUBLISH_DIR"
 
       # ----- Deploy FTP -----
