@@ -2,6 +2,7 @@ using Http.Extensions;
 using LIN.Access.Auth;
 using LIN.Contacts.Persistence.Extensions;
 using LIN.Contacts.Services.Authentication;
+using Microsoft.AspNetCore.HttpOverrides;
 
 // Crear constructor.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLINHttp();
 
 builder.Services.AddSignalR();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:app"]);
 
 // Services.
@@ -20,7 +22,7 @@ builder.Services.AddScoped<ICreateProfileService, CreateProfileService>();
 // Crear app.
 var app = builder.Build();
 
-app.UseLINHttp();
+app.UseForwardedHeaders();
 app.UsePersistence();
 
 // Establecer string de conexión.
@@ -29,5 +31,7 @@ Jwt.Open(builder.Configuration);
 app.MapHub<ContactsHub>("/realTime/contacts");
 
 app.MapControllers();
+app.UseLINHttp(useGateway: true);
+app.UseRouting();
 
 app.Run();

@@ -1,6 +1,7 @@
 using LIN.Contacts.Services.Authentication;
 using LIN.Types.Cloud.Identity.Abstracts;
 using LIN.Types.Cloud.Identity.Models;
+using LIN.Types.Cloud.Identity.Models.Identities;
 
 namespace LIN.Contacts.Controllers;
 

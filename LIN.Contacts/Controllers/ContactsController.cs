@@ -1,7 +1,7 @@
 namespace LIN.Contacts.Controllers;
 
 [LocalToken]
-[Route("[controller]")]
+[Route("api/[controller]")]
 [RateLimit(requestLimit: 10, timeWindowSeconds: 60, blockDurationSeconds: 100)]
 public class ContactsController(ContactsHubActions hubContext, Persistence.Data.Contacts contacts) : ControllerBase
 {
