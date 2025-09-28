@@ -42,8 +42,7 @@ jobs:
           dotnet publish "$PROJECT_PATH" \
             --configuration Release \
             --framework net9.0 \
-            --runtime win-x86 \
-            --self-contained true \
+            --self-contained false \
             -p:PublishSingleFile=false \
             -p:GenerateRuntimeConfigurationFiles=true \
             --no-build \
