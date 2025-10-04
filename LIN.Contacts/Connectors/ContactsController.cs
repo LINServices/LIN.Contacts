@@ -11,20 +11,18 @@ public class AssistantController(Persistence.Data.Profiles profiles, Persistence
     [HttpGet("all")]
     public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token)
     {
+        // Autenticación.
+        var authInformation = await Access.Auth.Controllers.Authentication.Login(token);
 
-        var information = await LIN.Access.Auth.Controllers.Authentication.Login(token);
-
-        if (information.Response != Responses.Success)
-        {
+        if (authInformation.Response != Responses.Success)
             return new ReadAllResponse<ContactModel>()
             {
-                Response = information.Response,
+                Response = authInformation.Response,
                 Message = "Autenticación invalida."
             };
-        }
-
+        
         // Leer la cuenta.
-        var profile = await profiles.ReadByAccount(information.Model.Id);
+        var profile = await profiles.ReadByAccount(authInformation.Model.Id);
 
         if (profile.Response != Responses.Success)
         {
