@@ -15,14 +15,14 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] ContactModel model)
     {
 
-        // Información del token.
+        // Informaciï¿½n del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar
         if (string.IsNullOrWhiteSpace(model.Name))
             return new CreateResponse()
             {
-                Message = "Parámetros inválidos",
+                Message = "Parï¿½metros invï¿½lidos",
                 Response = Responses.InvalidParam
             };
 
@@ -51,15 +51,16 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
+    /// <param name="query">Filtro por nombre (opcional).</param>
     [HttpGet("all")]
-    public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token)
+    public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token, [FromQuery] string? query = null)
     {
 
-        // Información del token.
+        // Informaciï¿½n del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Obtiene los contactos
-        var all = await contacts.ReadAll(tokenInfo.ProfileId);
+        var all = await contacts.ReadAll(tokenInfo.ProfileId, query);
 
         // Registra en el memory
         var profileOnMemory = Mems.Sessions[tokenInfo.ProfileId];
@@ -99,7 +100,7 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
     public async Task<HttpReadOneResponse<ContactModel>> Read([FromQuery] int id, [FromHeader] string token)
     {
 
-        // Información del token.
+        // Informaciï¿½n del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
@@ -134,7 +135,7 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
     public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
     {
 
-        // Información del token.
+        // Informaciï¿½n del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.
@@ -175,7 +176,7 @@ public class ContactsController(ContactsHubActions hubContext, Persistence.Data.
     public async Task<HttpResponseBase> Update([FromBody] ContactModel updateModel, [FromHeader] string token)
     {
 
-        // Información del token.
+        // Informaciï¿½n del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar IAM.

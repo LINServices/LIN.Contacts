@@ -14,7 +14,6 @@ public class EmmaController(Persistence.Data.Profiles profiles, Persistence.Data
     [HttpPost]
     public async Task<HttpReadOneResponse<LIN.Types.Cloud.OpenAssistant.Models.EmmaSchemaResponse>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
     {
-
         // Cliente HTTP.
         HttpClient client = new();
 

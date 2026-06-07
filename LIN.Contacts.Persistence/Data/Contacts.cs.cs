@@ -100,7 +100,8 @@ public partial class Contacts(Context.DataContext context)
     /// Obtiene los contactos asociados a un perfil.
     /// </summary>
     /// <param name="id">Id del perfil.</param>
-    public async Task<ReadAllResponse<ContactModel>> ReadAll(int id)
+    /// <param name="query">Filtro por nombre (opcional).</param>
+    public async Task<ReadAllResponse<ContactModel>> ReadAll(int id, string? query = null)
     {
         // Ejecución
         try
@@ -108,6 +109,7 @@ public partial class Contacts(Context.DataContext context)
             // Query de contactos
             var contacts = await (from contact in context.Contacts
                                   where contact.Im.Id == id
+                                  && (string.IsNullOrEmpty(query) || contact.Name.Contains(query))
                                   orderby contact.Name
                                   select new ContactModel
                                   {
