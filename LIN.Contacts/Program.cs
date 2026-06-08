@@ -18,7 +18,7 @@ builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:app"])
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddScoped<ContactsHubActions, ContactsHubActions>();
 builder.Services.AddScoped<ICreateProfileService, CreateProfileService>();
-
+builder.Services.AddHealthChecks();
 // Crear app.
 var app = builder.Build();
 

@@ -109,7 +109,7 @@ public partial class Contacts(Context.DataContext context)
             // Query de contactos
             var contacts = await (from contact in context.Contacts
                                   where contact.Im.Id == id
-                                  && (string.IsNullOrEmpty(query) || contact.Name.Contains(query))
+                                  && (string.IsNullOrEmpty(query) || contact.Name.Contains(query) || contact.Mails.Any(m => m.Email.Contains(query)))
                                   orderby contact.Name
                                   select new ContactModel
                                   {
